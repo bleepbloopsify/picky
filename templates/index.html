@@ -10,42 +10,93 @@
     </div> -->
 
     <div class="filter-contain">
-      <form action="POST">
+      <div class="row">
+        <!-- <div class="col-md-6">
+          <form action="POST">
+            <div id="distance">
+              <span id="distance-value-min"></span>
+              <span id="distance-value-max"></span>
+            </div>
 
-        <div id="price"></div>
-        <input id="price-value-min">
-        <input id="price-value-max">
-
-      </form>
+          </form>
+        </div> -->
+        <div class="col-md-6">
+          <form action="POST">
+            <div id="distance">
+              <span id="distance-value"></span>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+        </div>
+      </div>
     </div>
 
     <script>
-      $( "#price" ).slider( {
-        max: 100,
-        min: 0,
-        range:true,
-        values: [0, 100]
-      })
-      .each(function() {
-        var opt = $(this).data().uiSlider.options;
-        var vals = opt.max - opt.min;
-        for (var i = 0; i <= vals; i+=10) {
-          var el = $('<label>' + (i + opt.min) + '</label>').addClass("price-label");
-          $("#price").append(el);
+      $( "#distance" ).slider( {
+        value: 25,
+        max: 25,
+        change : function() {
+          var label = $('#distance-value');
+          label.text($('#distance').slider('value') + " miles");
+          var string = $('#distance').text();
+          label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 12);
+        },
+        slide : function() {
+          var label = $('#distance-value');
+          label.text($('#distance').slider('value') + " miles");
+          var string = $('#distance').text();
+          label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 12);
+          console.log(string.substring(0,string.length - 18));
         }
       });
-      var thumb = $($('#price').children('.ui-slider-handle'));
-      setLabelPosition();
-
-      $('#price').bind('slide', function () {
-          $('#sliderValue').val($('#slider').slider('value'));
-          setLabelPosition();
+        // create: function() {
+        //    $('#distance-value-min').appendTo($('#distance a').get(0));
+        //    $('#distance-value-max').appendTo($('#distance a').get(1));
+        // },
+        // slide: function(event, ui) {
+        //   $(ui.handle).find('span').html('$' + ui.value);
+        //
+      // .each(function() {
+      //   var opt = $(this).data().uiSlider.options;
+      //   var vals = opt.max - opt.min;
+      //   for (var i = 0; i <= vals; i+=5) {
+      //     var el = $('<label>' + (i + opt.min) + '</label>').addClass("distance-label");
+      //     $("#distance").append(el);
+      //   }
+      // });
+      $(document).ready(function() {
+        var label = $('#distance-value');
+        // var label = $('#distance-value-min');
+        // var label2 = $('#distance-value-max');
+        label.text($('#distance').slider('value') + " miles");
+        var string = $('#distance').text();
+        label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 12);
+        // label2.css('left', $('#distance').slider('values', 1) * 3 - 15);
+        // label2.text('$' + $('#distance').slider('values', 1));
       });
-
-      function setLabelPosition() {
-        var label = $('#sliderValue');
-        label.css('top', thumb.offset().top + label.outerHeight(true));
-        label.css('left', thumb.offset().left - (label.width() - thumb.width())/ 2);
-      }
+      // $('#distance').bind('slide', function () {
+      //   var label = $('#distance-value');
+      //   // var label = $('#distance-value-min');
+      //   // var label2 = $('#distance-value-max');
+      //   label.text('$' + $('#distance').slider('value'));
+      //   var string = $('#distance').text();
+      //   label.css('left', (parseInt(string.substring(16,string.length)) - 1) * 12);
+      //   console.log(string.substring(16,string.length));
+      //   // label2.css('left', $('#distance').slider('values', 1) * 3 - 15);
+      //   // label2.text('$' + $('#distance').slider('values', 1));
+      // });
+      // $('#distance-value-min').html('$' + $('#distance').slider('values', 0)).position({
+      //   my: 'center top',
+      //   at: 'center bottom',
+      //   of: $('#distance a:eq(0)'),
+      //   offset: "0, 10"
+      // });
+      // $('#distance-value-max').html('$' + $('#distance').slider('values', 1)).position({
+      //   my: 'center top',
+      //   at: 'center bottom',
+      //   of: $('#distance a:eq(1)'),
+      //   offset: "0, 10"
+      // });
     </script>
 {% endblock %}
