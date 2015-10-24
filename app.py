@@ -6,10 +6,21 @@ app.secret_key = "nothing"
 
 @app.route('/')
 def index():
+    util.filter(1000)
     return render_template('index.html')
 
-@app.route('/login')
+@app.route('/login', methods = ["GET","POST"] )
 def login():
+    if request.method == "POST":
+        form = request.form
+        username = form.get('user')
+        password = form.get('pwd')
+        auth = util.authenticate(username, password)
+        if auth == "":
+            session['user'] = username
+            return redirect('/')
+        else:
+            return render_template('login.html', err=auth)
     return render_template('login.html')
 
 @app.route('/register', methods=["GET","POST"])
