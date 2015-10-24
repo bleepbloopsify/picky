@@ -24,6 +24,10 @@ def register():
         util.new_user(user,pwd)
     return render_template('register.html')
 
+@app.route("/address")
+def address():
+  return render_template("/address.html")
+
 if __name__ == '__main__':
     app.debug = True
     app.run()

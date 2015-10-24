@@ -1,1 +1,51 @@
 {% extends "master.html" %}
+
+{% block body %}
+    <div class="home-contain">
+
+    </div>
+
+    <!-- <div class="about-contain">
+
+    </div> -->
+
+    <div class="filter-contain">
+      <form action="POST">
+
+        <div id="price"></div>
+        <input id="price-value-min">
+        <input id="price-value-max">
+
+      </form>
+    </div>
+
+    <script>
+      $( "#price" ).slider( {
+        max: 100,
+        min: 0,
+        range:true,
+        values: [0, 100]
+      })
+      .each(function() {
+        var opt = $(this).data().uiSlider.options;
+        var vals = opt.max - opt.min;
+        for (var i = 0; i <= vals; i+=10) {
+          var el = $('<label>' + (i + opt.min) + '</label>').addClass("price-label");
+          $("#price").append(el);
+        }
+      });
+      var thumb = $($('#price').children('.ui-slider-handle'));
+      setLabelPosition();
+
+      $('#price').bind('slide', function () {
+          $('#sliderValue').val($('#slider').slider('value'));
+          setLabelPosition();
+      });
+
+      function setLabelPosition() {
+        var label = $('#sliderValue');
+        label.css('top', thumb.offset().top + label.outerHeight(true));
+        label.css('left', thumb.offset().left - (label.width() - thumb.width())/ 2);
+      }
+    </script>
+{% endblock %}
