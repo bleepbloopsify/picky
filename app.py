@@ -44,8 +44,9 @@ def register():
         pwd = form.get('pwd')
         pwdtwo = form.get('pwd2')
         if pwd != pwdtwo:
-            return render_template('register.html')
-        util.newUser(user,pwd)
+            return render_template('register.html',err="Passwords Do Not Match")
+        if not util.newUser(user,pwd):
+            return render_template('register.html', err="Username Taken")
     return render_template('register.html')
 
 @app.route("/address")
