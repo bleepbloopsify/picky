@@ -5,18 +5,21 @@ import argparse
 import json
 import urllib
 import urllib2
+import datetime
 
 #SQLITE STUFF
 def create():
-    conn = sqlite3.connect("login.db")
+    conn = sqlite3.connect("database.db")
     c = conn.cursor()
-    create = "CREATE TABLE login (username text, passwosd text)"
-    c.execute(create)
+    createlogin = "CREATE TABLE IF NOT EXISTS login (username text, password text)"
+    c.execute(createlogin)
 
-
+    createinfo = "CREATE TABLE IF NOT EXISTS info (username text, restaurant text, location text, rating real, day text)"
+    c.execute(createinfo)
+    conn.commit()
 
 def newUser(username, password):
-    conn = sqlite3.connect("login.db")
+    conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("SELECT username FROM login WHERE username=:uname LIMIT 1", {"uname":username})
     data = c.fetchone()
@@ -29,7 +32,7 @@ def newUser(username, password):
     return False
 
 def authenticate(username, password):
-    conn = sqlite3.connect("login.db")
+    conn = sqlite3.connect("database.db")
     c = conn.cursor()
     m = hashlib.sha224(password).hexdigest()
     query = "SELECT password FROM login WHERE username=\"%s\"" % (username)
@@ -41,6 +44,23 @@ def authenticate(username, password):
         userstore = username
         return ""
     return "Incorrect Password"
+
+def setrating(uname, rating, location, restaurant):
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    query = "INSERT INTO info VALUES (\"%(username)s\", \"%(restaurant)s\", \"%(location)s\", \"%(rating)f\", \"%(day)s\")"%({
+    "username":uname,"restaurant":restaurant,"location":location, "rating":rating,"day":datetime.date.today()})
+    c.execute(query)
+    conn.commit()
+
+def getrating(location, restaurant):
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    query = "SELECT rating FROM info WHERE restaurant=:rest AND location=:loc"
+    data = c.execute(query, {"rest":restaurant, "loc":location}).fetchall()
+    data = [f[0] for f in data]
+    conn.commit()
+    return data
 
 #def record_restaurant():
 
@@ -71,8 +91,7 @@ def request(url_params=None,host=API_HOST, path=SEARCH_PATH):
 
     url_params = url_params or {}
     url = 'https://{0}{1}?'.format(host, urllib.quote(path.encode('utf8')))
-    print url
-    
+
     consumer = oauth2.Consumer(CONSUMER_KEY, CONSUMER_SECRET)
     oauth_request = oauth2.Request(method="GET", url=url, parameters=url_params)
 
@@ -107,5 +126,13 @@ def filter(rad, types="bars",addr="345 Chambers Street"):
         'radius':rad,
         'limit':5
     }
-    print request(url_params)
-    return request(url_params)
+    raw = request(url_params)
+    restaurants = []
+    for business in raw['businesses']:
+        restaurants+= [{
+            'name':business['name'],
+            'location':business['location']['display_address'],
+            'rating':business['rating'],
+            'distance':str(business['distance'])[:str(business['distance']).find('.')+1] + 'm'
+        }]
+    return restaurants
