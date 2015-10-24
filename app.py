@@ -3,11 +3,24 @@ import util
 
 app = Flask(__name__)
 app.secret_key = "nothing"
+util.create()
 
 @app.route('/')
 def index():
-    util.filter(1000)
     return render_template('index.html')
+
+
+@app.route('/history')
+@app.route('/history/<restaurant>/<location>')
+def history(restaurant="",location=""):
+    if restaurant=="" or location=="":
+        return redirect('/')
+
+    rating = util.getrating(location, restaurant)
+    rating = reduce(lambda x, y: x+y, rating)/len(rating)
+    rating = int(rating * 10)  / 10.
+    return render_template('rating.html',rating = rating)
+
 
 @app.route('/login', methods = ["GET","POST"] )
 def login():
@@ -32,7 +45,7 @@ def register():
         pwdtwo = form.get('pwd2')
         if pwd != pwdtwo:
             return render_template('register.html')
-        util.new_user(user,pwd)
+        util.newUser(user,pwd)
     return render_template('register.html')
 
 @app.route("/address")
