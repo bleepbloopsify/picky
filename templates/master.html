@@ -26,13 +26,13 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="link-border"><a class="navlink" href="/about">About</a></li>
             <li class="link-border"><a class="navlink" href="/login">Login</a></li>
-            <li><a class="navlink" href="/login">Register</a></li>
+            <li><a class="navlink" href="/register">Register</a></li>
           </ul>
         </div>
       </div>
     </nav>
     <body>
-
+      HELLO {{session['user']}}
       {% block body %}
 
       {% endblock %}

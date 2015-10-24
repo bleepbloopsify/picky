@@ -37,10 +37,10 @@ def authenticate(username, password):
     m = hashlib.sha224(password).hexdigest()
     query = "SELECT password FROM login WHERE username=\"%s\"" % (username)
     c.execute(query)
-    userdata = c.fetchone()
+    userdata = c.fetchone()[0]
     if userdata == None:
         return "Cannot find Username"
-    if m == userdata['password']:
+    if m == userdata:
         userstore = username
         return ""
     return "Incorrect Password"

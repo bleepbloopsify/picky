@@ -29,11 +29,12 @@ def login():
         username = form.get('user')
         password = form.get('pwd')
         auth = util.authenticate(username, password)
+        print auth
         if auth == "":
             session['user'] = username
             return redirect('/')
         else:
-            return render_template('login.html', err=auth)
+            return render_template('login.html', error=auth)
     return render_template('login.html')
 
 @app.route('/register', methods=["GET","POST"])
@@ -47,6 +48,9 @@ def register():
             return render_template('register.html',err="Passwords Do Not Match")
         if not util.newUser(user,pwd):
             return render_template('register.html', err="Username Taken")
+        else:
+            session['user'] = user
+            return redirect('index.html')
     return render_template('register.html')
 
 @app.route("/address")
