@@ -6,6 +6,7 @@ app.secret_key = "nothing"
 
 @app.route('/')
 def index():
+    util.filter(1000)
     return render_template('index.html')
 
 @app.route('/login', methods = ["GET","POST"] )

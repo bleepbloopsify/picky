@@ -1,6 +1,5 @@
 import sqlite3
 import hashlib
-import requests
 import oauth2
 import argparse
 import json
@@ -11,7 +10,7 @@ import urllib2
 def create():
     conn = sqlite3.connect("login.db")
     c = conn.cursor()
-    create = "CREATE TABLE login (username text, password text)"
+    create = "CREATE TABLE login (username text, passwosd text)"
     c.execute(create)
 
 
@@ -45,29 +44,68 @@ def authenticate(username, password):
 
 #def record_restaurant():
 
-def pull(addr, typ, rad):
-    API_HOST = 'api.yelp.com'
-    DEFAULT_TERM = 'dinner'
-    DEFAULT_LOCATION = 'San Francisco, CA'
-    SEARCH_LIMIT = 3
-    SEARCH_PATH = '/v2/search/'
-    BUSINESS_PATH = '/v2/business/'
+API_HOST = 'api.yelp.com'
+DEFAULT_TERM = 'dinner'
+DEFAULT_LOCATION = 'San Francisco, CA'
+SEARCH_LIMIT = 3
+SEARCH_PATH = '/v2/search/'
+#BUSINESS_PATH = '/v2/business/'
 
 # OAuth credential placeholders that must be filled in by users.
-    CONSUMER_KEY = None
-    CONSUMER_SECRET = None
-    TOKEN = None
-    TOKEN_SECRET = None
-    uri = "https://api.yelp.com/v2/search?term=food&sort=1%(address)s%(types)s%(radius)s"
+CONSUMER_KEY = "LsCXQQuggKugyyJCt4DkDw"
+CONSUMER_SECRET = "TG8tyKlYvMTG3zSfn-YBNCOuuSk"
+TOKEN = "B2wxvqBxgXYZ8tZWMBn4QU5Sm01MVeUN"
+TOKEN_SECRET = "RL8NahsPX5xNXCE3aHM-y9iqYj4"
 
-    client = oauthlib.auth1.Client('LsCXQQuggKugyyJCt4DkDw',client_secret='TG8tyKlYvMTG3zSfn-YBNCOuuSk')
-    uri, headers, body = client.sign('https://')
+def request(url_params=None,host=API_HOST, path=SEARCH_PATH):
+    """Prepares OAuth authentication and sends the request to the API.
+    Args:
+        host (str): The domain host of the API.
+        path (str): The path of the API after the domain.
+        url_params (dict): An optional set of query parameters in the request.
+    Returns:
+        dict: The JSON response from the request.
+    Raises:
+        urllib2.HTTPError: An error occurs from the HTTP request.
+    """
 
-    address = "&location=%s"%(addr)
-    types = "&category_filter=%s"%(typ)
-    radius = "&radius_filter=%s"%(rad)
-    r = requests.get(url%(app_key,))
-    return ""
+    url_params = url_params or {}
+    url = 'https://{0}{1}?'.format(host, urllib.quote(path.encode('utf8')))
+    print url
+    
+    consumer = oauth2.Consumer(CONSUMER_KEY, CONSUMER_SECRET)
+    oauth_request = oauth2.Request(method="GET", url=url, parameters=url_params)
 
-def filter():
-    return ["mcd"]
+    oauth_request.update(
+        {
+            'oauth_nonce': oauth2.generate_nonce(),
+            'oauth_timestamp': oauth2.generate_timestamp(),
+            'oauth_token': TOKEN,
+            'oauth_consumer_key': CONSUMER_KEY
+        }
+    )
+    token = oauth2.Token(TOKEN, TOKEN_SECRET)
+    oauth_request.sign_request(oauth2.SignatureMethod_HMAC_SHA1(), consumer, token)
+    signed_url = oauth_request.to_url()
+
+    print u'Querying {0} ...'.format(url)
+
+    conn = urllib2.urlopen(signed_url, None)
+    try:
+        response = json.loads(conn.read())
+    finally:
+        conn.close()
+
+    return response
+
+
+
+def filter(rad, types="bars",addr="345 Chambers Street"):
+    url_params = {
+        'location':addr.replace(' ','+'),
+        'category_filter':types,
+        'radius':rad,
+        'limit':5
+    }
+    print request(url_params)
+    return request(url_params)
