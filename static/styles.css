@@ -54,18 +54,25 @@
 .nav {
   padding-top: 10px;
 }
-#price {
+#distance {
   margin: 10px;
-  width: 300px;
-  background: transparent;
+  width: 302px;
+  margin-top: 50px;
+  margin-left: 50px;
 }
-.ui-widget-header {
-  background: red !important;
+ui-slider-handle:focus {
+  outline: none;
 }
-.price-label {
+.distance-label {
   font-size: 10px;
   color: gray;
-  width: 9%;
+  width: 15px;
   margin-top: 20px;
   text-align: center;
+}
+#distance-value-min, #distance-value-max , #distance-value {
+  position:absolute;
+  width: 80px;
+  top: -30px;
+  font-size: 12px;
 }
