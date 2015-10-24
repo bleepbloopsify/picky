@@ -32,7 +32,9 @@
       </div>
     </nav>
     <body>
-      HELLO {{session['user']}}
+      {% if session['user'] %}
+        Hello {{session['user']}}!
+      {% endif %}
       {% block body %}
 
       {% endblock %}
