@@ -7,16 +7,7 @@ util.create()
 
 @app.route('/')
 def index():
-
-    util.setrating("Leon",4.0,"lol","grand banks")
-    util.setrating("Leon",3.0,"lol","grand banks")
-    util.setrating("Leon",4.0,"lol","grand banks")
-    util.setrating("Leon",2.0,"lol","grand banks")
-    util.setrating("Leon",1.0,"lol","grand banks")
-    util.setrating("Leon",3.0,"lol","grand banks")
-
-    restaurants = util.filter(1000)
-    return render_template('index.html',bleh=util.filter(1000))
+    return render_template('index.html')
 
 
 @app.route('/history')
@@ -56,6 +47,10 @@ def register():
             return render_template('register.html')
         util.newUser(user,pwd)
     return render_template('register.html')
+
+@app.route("/address")
+def address():
+  return render_template("/address.html")
 
 if __name__ == '__main__':
     app.debug = True
