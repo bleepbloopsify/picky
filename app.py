@@ -24,7 +24,7 @@ def restaurants():
 
         session['addr'] = address
         results = util.filter(address,radius,types,rating)
-        return render_template('restaurants.html', results=results,suggest=util.suggest(session['user'],results))
+        return render_template('restaurants.html', results=results)
     return redirect('/index')
 
 @app.route('/results')
