@@ -1,14 +1,13 @@
 {% extends "master.html" %}
 {% block body %}
-WORKED!!
 {{results}}
 {{suggest}}}
 
 {% for result in results %}
-  {# name = result['name'] #}
-  {# rat = result['rating'] #}
-  {# loc = result['location'][0] #}
-  {# dist = result['distance'] #}
+  {% name = result['name'] %}
+  {% rat = result['rating'] %}
+  {% loc = result['location'][0] %}
+  {% dist = result['distance'] %}
   <div class="row">
     <div class="col-sm-5">{{result['name']}}</div>
     <div class="col-sm-2">{{result['rating']}}</div>
@@ -16,8 +15,6 @@ WORKED!!
     <div class="col-sm-2">{{result['distance']}}</div>
   </div>
     <div class="col-sm-5">{{result['link']}}</div>
-
-
 
   {% for cat in category %}
     {{ cat + " ,"}}
@@ -33,5 +30,6 @@ WORKED!!
     </div>
     <button id="sendFilter">Search</button>
   </div>
+</div>
 </div>
 {% endblock %}
