@@ -37,7 +37,9 @@
         </div>
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
-            <div class="type-list">
+            <div class="type-list" id="results">
+              <div class="row">
+
               <!-- <div class="row restaurant-list">
                 <div class="col-md-3 restaurant-list">
                   <button class="restaurant-type selected"> Chinese </button>
@@ -109,24 +111,28 @@
         $("#distance").append(el5);
         $("#distance").append(el6);
       });
-      $(".restaurant-type").click(function(){
-        console.log("hello");
-        if($(this).hasClass("selected")) {
-          $(this).removeClass("selected");
-        }
-        else {
-          $(this).addClass("selected");
-        }
-      });
       $(function() {
-         $('a#addr').bind('click', function() {
-           $.getJSON('/results', {
-             addr: $('input[name="address"]').val()
-           }, function(data) {
-             console.log("hello");
-           });
-           return false;
+       $('a#addr').bind('click', function() {
+         $.getJSON('/results', {
+           addr: $('input[name="address"]').val()
+         }, function(data) {
+           var data = data.result;
+           for (var i = 0; i < data.length; i++){
+             $("#results").append('<div class="col-md-3 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
+           }
+           $("#results").append('</div>')
          });
+         return false;
        });
+     });
+     $(document).on("click", ".restaurant-type", function(){
+       console.log("Hello");
+       if($(this).hasClass("selected")) {
+         $(this).removeClass("selected");
+       }
+       else {
+         $(this).addClass("selected");
+       }
+     });
     </script>
 {% endblock %}

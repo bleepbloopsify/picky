@@ -117,9 +117,24 @@ def request(url_params=None,host=API_HOST, path=SEARCH_PATH):
 
     return response
 
+def getTypes(addr,rad=8000):
+    url_params = {
+    'term':'restaurants',
+    'location':addr.replace(' ','+'),
+    'radius':rad,
+    }
+    raw = request(url_params)
+    types = []
+    for business in raw['businesses']:
+        for category in business['categories']:
+            if category[0] not in types:
+                types += [category[0]]
+    return types
+
 def filter(addr, rad=8000, types="bars"):
     print "ok!"
     url_params = {
+        'term':'restaurants',
         'location':addr.replace(' ','+'),
         'category_filter':types,
         'radius':rad,
@@ -132,6 +147,7 @@ def filter(addr, rad=8000, types="bars"):
         restaurants += [{
             'name':business['name'],
             'location':business['location']['display_address'],
+            'category':business['category_filter'],
             'rating':business['rating'],
             'distance':str(business['distance'])[:str(business['distance']).find('.')+1] + 'm'
         }]

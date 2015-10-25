@@ -25,10 +25,10 @@ def restaurants():
 @app.route('/results')
 def results():
      args = request.args
-     print args
      addr = args.get('addr')
-     print addr
-     return jsonify(result=util.filter(addr))
+     result = util.getTypes(addr)
+     print jsonify(result=result)
+     return jsonify(result=result)
 
 @app.route('/history')
 @app.route('/history/<location>', methods=['GET','POST'])
