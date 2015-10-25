@@ -13,18 +13,19 @@ def index():
 @app.route('/restaurants', methods=["GET","POST"])
 def restaurants():
     if request.method == "POST":
-        form = request.data
+        form = request.form
+        print form
         details = form['details']
         details = details.strip().strip(',').split(';')
         #address radius ratings categories
         address = details[0]
         radius = int(details[1]) * 1609
-        ratings = details[2]
+        rating = details[2]
         types = details[3].split(',')
-        print "hello"
-        results = util.filter(address,radius,types,ratings)
-        print"uh oh"
-        return render_template('restaurants.html', results=results)
+
+        session['addr'] = address
+        results = util.filter(address,radius,types,rating)
+        return render_template('restaurants.html', results=results,suggest=util.suggest(session['user'],results))
     return redirect('/index')
 
 @app.route('/results')
@@ -97,4 +98,4 @@ def about():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host = "0.0.0.0", port = 8080) 
+    app.run(host = "0.0.0.0", port = 8080)
