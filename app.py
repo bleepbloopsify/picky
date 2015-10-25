@@ -22,8 +22,9 @@ def restaurants():
         radius = int(details[1]) * 1609
         rating = details[2]
         types = details[3].split(',')
+
+        session['addr'] = address
         results = util.filter(address,radius,types,rating)
-        util.setrating(session['user'],1,'lol','lol','Bars')
         return render_template('restaurants.html', results=results,suggest=util.suggest(session['user'],results))
     return redirect('/index')
 
