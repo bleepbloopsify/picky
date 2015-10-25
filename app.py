@@ -26,7 +26,7 @@ def restaurants():
 def results():
      args = request.args
      addr = args.get('addr')
-     return util.filter(addr, 8000, [])
+     return util.filter(addr, 8000, '')
 
 @app.route('/history')
 @app.route('/history/<location>', methods=['GET','POST'])
