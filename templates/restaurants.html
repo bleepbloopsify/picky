@@ -34,9 +34,26 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="hideornah col-md-8 col-md-offset-2">
+      <div class="row">
+      {% for cat in categories %}
+        <div class="col-md-3 col-sm-4 col-xs-6 restaurant-list">
+          <button class="restaurant-type selected">
+            {{cat}}
+          </button>
+        </div>
+      {% endfor %}
+      </div>
+      <button class="sendFilter" id="sendFilter">Search</button>
+    </div>
   <div class="see-more">
     <p>More Filtering</p>
     <span id="see-more" class="glyphicon glyphicon-menu-down"></span>
+  </div>
+  <div class="see-less">
+    <p>Less Filtering</p>
+    <span id="see-less" class="glyphicon glyphicon-menu-up"></span>
   </div>
   <hr class="res-line">
   {% for result in results %}
@@ -70,7 +87,7 @@
   {% endfor %}
 </div>
 <script>
-  var stars = 0;
+  var stars = {{session['setrating']}};
   var enters = 0;
   $(".starry").each(function(i, obj) {
     var loop = ($(obj).attr("class"))[0];
@@ -268,6 +285,16 @@
     var form = $('<form style="display:none" action="' + url + '" method="post">' + '<input type="text" name="details" value="' + sendString + '" />' +'</form>');
     $('body').append(form);
     form.submit();
+  });
+  $(document).on("click", ".see-more", function(){
+    $(".see-more").css("display", "none");
+    $(".see-less").css("display", "block");
+    $(".hideornah").css("display", "block");
+  });
+  $(document).on("click", ".see-less", function(){
+    $(".see-less").css("display", "none");
+    $(".see-more").css("display", "block");
+    $(".hideornah").css("display", "none");
   });
 </script>
 {% endblock %}
