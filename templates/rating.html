@@ -1,20 +1,21 @@
 {% extends "master.html" %}
 {% block body %}
-<div class="nav-contain">
-  {{ nav() }}
-</div>
+<div class="container-fluid">
+    <div class="nav-contain">
+      {{ nav() }}
+    </div>
 
-<div class="row">
-  <div class="col-sm-3 result-name col-sm-offset-1">{{restaurant}}</div>
-  <div class="col-sm-4 result-name">{{ location[0] }} {{ location [1] }} {{ location[2] }}</div>
-  <div class="col-sm-3 result-name">        </div><!-- STARSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS -->
-</div>
-<div class="row">
-  <div class="col-sm-3 result-name col-sm-offset-1">
-    {% for c in category %}{{c}} {% endfor %}
+    <div class="row">
+      <div class="col-sm-3 result-name col-sm-offset-1">{{restaurant}}</div>
+      <div class="col-sm-4 result-name">{{ location[0] }} {{ location [1] }} {{ location[2] }}</div>
+      <div class="col-sm-3 result-name">        </div><!-- STARSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS -->
+    </div>
+    <div class="row">
+      <div class="col-sm-3 result-name col-sm-offset-1">
+        {% for c in category %}{{c}} {% endfor %}
+      </div>
+    </div>
   </div>
-</div>
-
 
 
 </div>
