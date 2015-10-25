@@ -233,7 +233,7 @@
         sendString+= $('#distance').slider('value') + ";";
         sendString+= stars + ";";
         sendString+=restaurants;
-        console.log(sendString);
+        $.post("/restaurants", {details:sendString});
       });
     </script>
 {% endblock %}
