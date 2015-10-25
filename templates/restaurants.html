@@ -1,13 +1,5 @@
 {% extends "master.html" %}
 {% block body %}
-<<<<<<< HEAD
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-4">
-      </div>
-      <div class="col-md-8">
-=======
-WORKED!!
 {{results}}
 {{suggest}}}
 
@@ -16,6 +8,14 @@ WORKED!!
   {% rat = result['rating'] %}
   {% loc = result['location'][0] %}
   {% dist = result['distance'] %}
+  <div class="row">
+    <div class="col-sm-5">{{result['name']}}</div>
+    <div class="col-sm-2">{{result['rating']}}</div>
+    <div class="col-sm-3"><a href={{"/history/%s/%s/%s"%(result['loc'],result['name'],result['category'])}}</div>
+    <div class="col-sm-2">{{result['distance']}}</div>
+  </div>
+    <div class="col-sm-5">{{result['link']}}</div>
+
   {% for cat in category %}
     {{ cat + " ,"}}
   {% endfor %}
@@ -26,15 +26,10 @@ WORKED!!
   <div class="col-md-6 col-md-offset-3">
     <div class="type-list">
       <div class="row" id="results">
->>>>>>> 7f35884944624275db49c1a2261f915806623bb2
       </div>
     </div>
     <button id="sendFilter">Search</button>
   </div>
-<<<<<<< HEAD
-=======
 </div>
-
-
->>>>>>> 7f35884944624275db49c1a2261f915806623bb2
+</div>
 {% endblock %}

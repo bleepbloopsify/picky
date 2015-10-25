@@ -78,7 +78,7 @@ def getUserCategories(uname):
 
 #def record_restaurant():
 #API STUFF
-API_HOST = 'api.yelp.com'
+YELP_HOST = 'api.yelp.com'
 DEFAULT_TERM = 'dinner'
 DEFAULT_LOCATION = 'San Francisco, CA'
 SEARCH_LIMIT = 3
@@ -91,7 +91,7 @@ CONSUMER_SECRET = "TG8tyKlYvMTG3zSfn-YBNCOuuSk"
 TOKEN = "B2wxvqBxgXYZ8tZWMBn4QU5Sm01MVeUN"
 TOKEN_SECRET = "RL8NahsPX5xNXCE3aHM-y9iqYj4"
 
-def request(url_params=None,host=API_HOST, path=SEARCH_PATH):
+def request(url_params=None,host=YELP_HOST, path=YELP_SEARCH_PATH):
     """Prepares OAuth authentication and sends the request to the API.
     Args:
         host (str): The domain host of the API.
@@ -102,6 +102,10 @@ def request(url_params=None,host=API_HOST, path=SEARCH_PATH):
     Raises:
         urllib2.HTTPError: An error occurs from the HTTP request.
     """
+
+    # if api == "google":
+    #     CONSUMER_KEY = ""
+    #     CONSUMER_SECRET ="NYHPtFCnNVhup9oVo9nDki9a"
 
     url_params = url_params or {}
     url = 'https://{0}{1}?'.format(host, urllib.quote(path.encode('utf8')))
@@ -130,6 +134,9 @@ def request(url_params=None,host=API_HOST, path=SEARCH_PATH):
         conn.close()
 
     return response
+
+def placeRequest(url_params=None,host=GOOGLE_HOST,path=GOOGLE_SEARCH_PATH):
+
 
 def getTypes(addr,rad=8000):
     url_params = {
@@ -161,7 +168,8 @@ def filter(addr, rad=8000, types=[], rating=0):
             'location':business['location']['display_address'],
             'category':business['categories'],
             'rating':business['rating'],
-            'distance':str(business['distance'])[:str(business['distance']).find('.')+1] + 'm'
+            'distance':str(business['distance'])[:str(business['distance']).find('.')+1] + 'm',
+            'link':business['url']
         }]
     for restaurant in restaurants:
         print "hello"
@@ -188,10 +196,11 @@ def suggest(uname, restaurants):
     data = c.execute(query, {"uname":uname}).fetchall()
     cats = {}
     for d in [d[0] for d in data]:
-        if d not in cats:
-            cats[d] = 1
-        else:
-            cats[d] += 1
+        for s in d.split(','):
+            if s not in cats:
+                cats[s] = 1
+            else:
+                cats[s] += 1
     fav = "helpme"
     most_visit = -1
     for k,v in cats.iteritems():
