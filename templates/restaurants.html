@@ -296,5 +296,31 @@
     $(".see-more").css("display", "block");
     $(".hideornah").css("display", "none");
   });
+  $(document).on("click", "#login", function(){
+    $(".login").css("display", "block");
+    $(".cover").css("display", "block");
+  });
+  $(document).on("click", "#register", function(){
+    $(".register").css("display", "block");
+    $(".cover").css("display", "block");
+  });
+  $(document).on("click", "#exit-log", function(){
+    $(".login").css("display", "none");
+    $(".cover").css("display", "none");
+  });
+  $(document).on("click", "#exit-reg", function(){
+    $(".register").css("display", "none");
+    $(".cover").css("display", "none");
+  });
+  $(document).on("click", "#screen-log", function(){
+    $(".login").css("display", "block");
+    $(".register").css("display", "none");
+    $(".cover").css("display", "block");
+  });
+  $(document).on("click", "#screen-reg", function(){
+    $(".login").css("display", "none");
+    $(".register").css("display", "block");
+    $(".cover").css("display", "block");
+  });
 </script>
 {% endblock %}
