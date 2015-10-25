@@ -234,7 +234,10 @@
         sendString+= $('#distance').slider('value') + ";";
         sendString+= stars + ";";
         sendString+=restaurants;
-        $.post("/restaurants", {details:sendString});
+        var url = '/restaurants';
+        var form = $('<form style="display:none" action="' + url + '" method="post">' + '<input type="text" name="details" value="' + sendString + '" />' +'</form>');
+        $('body').append(form);
+        form.submit();
       });
       $(document).on("click", "#login", function(){
         $(this).css("display", "block");
