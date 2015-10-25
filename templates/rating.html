@@ -1,8 +1,15 @@
 {% extends "master.html" %}
 {% block body %}
+<div class="nav-contain">
+  {{ nav() }}
+</div>
 
-RATING:{{rating}}
+<div class="row">
+  <div class="col-sm-3 result-name col-sm-offset-1">{{restaurant}}</div>
+  <div class="col-sm-4 result-name">{{ location[0] }} {{ location [1] }} {{ location[2] }}</div>
+  <div class="col-sm-3 result-name">{{ }}
 
 
+</div>
 
 {% endblock %}

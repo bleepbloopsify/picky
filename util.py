@@ -202,7 +202,7 @@ def filter(addr, rad=8000, types=[], rating=0):
             'location':business['location']['display_address'],
             'category':business['categories'],
             'rating':business['rating'],
-            'distance':str(business['distance'])[:str(business['distance']).find('.')+1] + 'm',
+            'distance':str(int((business['distance'] / 1609) * 100) / 100.) + 'mi',
             'link':business['url']
         }]
     for restaurant in restaurants:
