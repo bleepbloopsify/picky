@@ -170,6 +170,11 @@ input:-webkit-autofill {
   margin-left: auto;
   margin-right: auto;
 }
+.starred {
+  width: 125px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .starry {
   width: 125px;
   margin-left: auto;
@@ -470,4 +475,84 @@ input:-webkit-autofill {
 }
 .hideornah {
   display: none;
+}
+.fin-name {
+  font-size: 30px;
+  text-align: center;
+}
+.fin-tags {
+  font-size: 16px;
+  text-align: center;
+}
+.fin-loc {
+  text-align: center;
+  font-size: 20px;
+}
+.fin-rad {
+  padding-top: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+.accept, .random, .back {
+  background: #B50000;
+  border: none;
+  color: white;
+  margin-top: 160px;
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.accept:focus, .random:focus, .back:focus {
+  outline: none;
+}
+.fin-star {
+  margin-top: 10px;
+}
+.fin-box p {
+  font-size: 22px;
+  text-align: center;
+}
+.fin-box button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: transparent;
+  margin-top: 20px;
+  border: 1px solid gray;
+  width: 100px;
+  height: 35px;
+  font-size: 16px;
+}
+.fin-box button:focus {
+  outline: none;
+}
+.fin-link a {
+  text-decoration: underline;
+  color: black;
+}
+.fin-link {
+  margin-top: 10px;
+  font-size: 14px;
+  width: 100px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.fin-box {
+  width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 60px 40px 60px;
+  margin-top: 30px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 80px;
+  background: white;
+  display: none;
+  z-index: 100;
 }

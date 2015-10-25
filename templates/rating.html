@@ -6,18 +6,139 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-3 result-name col-sm-offset-1">{{restaurant}}</div>
-      <div class="col-sm-4 result-name">{{ location[0] }} {{ location [1] }} {{ location[2] }}</div>
-      <div class="col-sm-3 result-name">        </div><!-- STARSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS -->
-    </div>
-    <div class="row">
-      <div class="col-sm-3 result-name col-sm-offset-1">
-        {% for c in category %}{{c}} {% endfor %}
+      <div class="col-sm-3 col-sm-offset-1">
+        <div class="fin-name">
+          {{restaurant}}
+          <div class="fin-tags">
+            {% for cat in category %}
+              {% if loop.last %}
+                {{cat}}
+              {% else %}
+                {{cat}},
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="fin-loc">
+          {{location[0]}}<br>
+          {{location[1]}},
+          {{location[2]}}
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <div class="fin-rad">
+          {{session['setrad']}} miles
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="starred">
+          <div>
+            <span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-2">
+        <button class="back">Back To The List</button>
+      </div>
+      <div class="col-md-2 col-md-offset-1">
+        <button class="accept">Sounds Great</button>
+      </div>
+      <div class="col-md-2 col-md-offset-1">
+        <button class="random">Random</button>
+      </div>
+    </div>
+    <div class="fin-box">
+      <p> Please Leave A Rating </p>
+      <div class="star fin-star">
+        <span id="star-5" class="rating">☆</span><span id="star-4" class="rating">☆</span><span id="star-3" class="rating">☆</span><span id="star-2" class="rating">☆</span><span id="star-1" class="rating">☆</span>
+      </div>
+      <button type="submit">Submit</button>
+      <div class="fin-link"><a href="/index">No Thanks</a></div>
+    </div>
   </div>
-
-
-</div>
-
+  <div class="cover">
+  </div>
+ <script>
+   $(document).on("click", "#star-1", function(){
+     if ($("#star-1")) {
+       $(id).removeClass("rating-select");
+       $(id).addClass("rating");
+     }
+     for (var i = 5; i > 1; i--) {
+       var id = "#star-" + i;
+       $(id).removeClass("rating-select");
+       $(id).addClass("rating");
+     }
+     $("#star-1").addClass("rating-select");
+     $("star-1").removeClass("rating");
+     stars = 1;
+   });
+   $(document).on("click", "#star-2", function(){
+     for (var i = 5; i > 2; i--) {
+       var id = "#star-" + i;
+       $(id).removeClass("rating-select");
+       $(id).addClass("rating");
+     }
+     for (var i = 0; i < 2; i++) {
+       var id = "#star-" + (i + 1);
+       $(id).addClass("rating-select");
+       $(id).removeClass("rating");
+     }
+     stars = 2;
+   });
+   $(document).on("click", "#star-3", function(){
+     for (var i = 5; i > 3; i--) {
+       var id = "#star-" + i;
+       $(id).removeClass("rating-select");
+       $(id).addClass("rating");
+     }
+     for (var i = 0; i < 3; i++) {
+       var id = "#star-" + (i + 1);
+       $(id).addClass("rating-select");
+       $(id).removeClass("rating");
+     }
+     stars = 3;
+   });
+   $(document).on("click", "#star-4", function(){
+     for (var i = 5; i > 4; i--) {
+       var id = "#star-" + i;
+       $(id).removeClass("rating-select");
+       $(id).addClass("rating");
+     }
+     for (var i = 0; i < 4; i++) {
+       var id = "#star-" + (i + 1);
+       $(id).addClass("rating-select");
+       $(id).removeClass("rating");
+     }
+     stars = 4;
+   });
+   $(document).on("click", "#star-5", function(){
+     for (var i = 0; i < 5; i++) {
+       var id = "#star-" + (i + 1);
+       $(id).addClass("rating-select");
+       $(id).removeClass("rating");
+     }
+     stars = 5;
+   });
+   $(document).ready(function() {
+     var counter = 5;
+     var loop = {{session['setrating']}};
+     $(".starred > div").children('span').each(function (i, obj) {
+       if (counter <= loop) {
+         $(obj).addClass("rated-select");
+         $(obj).removeClass("rated");
+       }
+       counter--;
+     });
+     $(".cover").height($(window).height());
+   });
+   $(document).on("click", ".accept", function(){
+     $(".fin-box").css("display", "block");
+     $(".cover").css("display", "block");
+   });
+  </script>
 {% endblock %}
