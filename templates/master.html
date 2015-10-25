@@ -25,16 +25,13 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li class="link-border"><a class="navlink" href="/about">About</a></li>
-            <li class="link-border"><a class="navlink" href="/login">Login</a></li>
-            <li><a class="navlink" href="/register">Register</a></li>
+            <li id="login" class="link-border"><a class="navlink">Login</a></li>
+            <li id="register"><a class="navlink">Register</a></li>
           </ul>
         </div>
       </div>
     </nav>
     <body>
-      {% if session['user'] %}
-        Hello {{session['user']}}!
-      {% endif %}
       {% block body %}
 
       {% endblock %}

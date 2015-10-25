@@ -1,13 +1,17 @@
 .contain {
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: 100px;
+  padding-top: 10px;
 }
 .home-contain {
-  width: 1024px;
-  height: 476px;
+  width: 1280px;
+  height: 560px;
   margin-left: auto;
   margin-right: auto;
+  background: url("PickyPage1.png") bottom center;
+  background-size: cover;
+  margin-bottom: 60px;
+  position: relative;
 }
 .about-contain {
   height: 300px;
@@ -19,6 +23,7 @@
   margin-left: auto;
   margin-right: auto;
   padding-top: 50px;
+  display: none;
 }
 .navbar {
   background: transparent;
@@ -145,18 +150,19 @@
 }
 .type-list {
   margin-top: 70px;
+  padding-bottom: 10px;
 }
 .restaurant-type {
   display: block;
   background-color: transparent;
   border: 1px solid gray;
-  width: 100px;
-  height: 30px;
+  width: 125px;
+  height: 50px;
   margin-left: auto;
   margin-right: auto;
 }
 .restaurant-list {
-  height: 50px;
+  height: 80px;
 }
 .selected {
   background-color: red;
@@ -165,4 +171,116 @@
 }
 .restaurant-type:focus {
   outline: none;
+}
+.about-text {
+  width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 24px;
+  padding-bottom: 80px;
+}
+.about-text p {
+  text-align: justify;
+  padding-top: 30px;
+  font-size: 16px;
+}
+.addr-box {
+  position: absolute;
+  left: 800px;
+  top: 300px;
+}
+.address-button {
+  visibility: hidden;
+}
+.address-home {
+  background: transparent;
+  border: none;
+  width: 200px;
+  height: 40px;
+  font-size: 20px;
+}
+
+.login {
+  width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 60px 40px 60px;
+  margin-top: 30px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 80px;
+  background: white;
+  display: none;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.login-form input {
+  display: block;
+  margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  height: 35px;
+  border: 1px solid gray;
+  padding-left: 5px;
+}
+
+.login-form input:focus {
+  outline: none;
+}
+
+.login-form button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: transparent;
+  margin-top: 20px;
+  border: 1px solid gray;
+  width: 100px;
+  height: 35px;
+  font-size: 16px;
+}
+
+.login-form p {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.error-message {
+  font-size: 14px;
+  color: red;
+  text-align: center;
+  margin-top: 0px;
+}
+.login-msg {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.cover {
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+}
+#sendFilter {
+  background: transparent;
+  border: 1px solid gray;
+  margin-bottom: 50px;
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
