@@ -5,7 +5,7 @@
 }
 .home-contain {
   width: 1024px;
-  height: 576px;
+  height: 476px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -15,10 +15,10 @@
   margin-right: auto;
 }
 .filter-contain {
-  border-top: 1px solid black;
   height: 300px;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 50px;
 }
 .navbar {
   background: transparent;
@@ -56,23 +56,113 @@
 }
 #distance {
   margin: 10px;
-  width: 302px;
-  margin-top: 50px;
-  margin-left: 50px;
+  width: 202px;
+  margin-left: auto;
+  margin-right: auto;
 }
-ui-slider-handle:focus {
+.ui-slider-handle:focus {
   outline: none;
 }
-.distance-label {
+.distance-label-1 {
   font-size: 10px;
   color: gray;
-  width: 15px;
+  width: 35px;
   margin-top: 20px;
-  text-align: center;
+}
+.distance-label-2 {
+  font-size: 10px;
+  color: gray;
+  width: 37px;
+  margin-top: 20px;
+}
+.distance-label-3 {
+  font-size: 10px;
+  color: gray;
+  width: 40px;
+  margin-top: 20px;
+}
+.distance-label-4 {
+  font-size: 10px;
+  color: gray;
+  width: 42px;
+  margin-top: 20px;
+}
+.distance-label-5 {
+  font-size: 10px;
+  color: gray;
+  width: 32px;
+  margin-top: 20px;
+}
+.distance-label-6 {
+  font-size: 10px;
+  color: gray;
+  width: 13px;
+  margin-top: 20px;
+  text-align: right;
 }
 #distance-value-min, #distance-value-max , #distance-value {
   position:absolute;
   width: 80px;
   top: -30px;
   font-size: 12px;
+}
+.rating > span:hover:before {
+   content: "\2605";
+   position: absolute;
+}
+.rating {
+  padding-top: 10px;
+  font-size: 24px;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+}
+.star {
+  width: 125px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.rating-contain {
+  width: 250px;
+  float: right;
+}
+.rating-contain p {
+  text-align: center;
+  font-size: 16px;
+}
+.distance-contain p {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+.distance-contain {
+  width: 260px;
+  float: left;
+}
+.type-list {
+  margin-top: 70px;
+}
+.restaurant-type {
+  display: block;
+  background-color: transparent;
+  border: 1px solid gray;
+  width: 100px;
+  height: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.restaurant-list {
+  height: 50px;
+}
+.selected {
+  background-color: red;
+  border: none;
+  color: white;
+}
+.restaurant-type:focus {
+  outline: none;
 }

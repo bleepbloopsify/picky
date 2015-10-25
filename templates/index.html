@@ -2,6 +2,8 @@
 
 {% block body %}
     <div class="home-contain">
+      <input name="address" type = "text" class="address-home">
+      <p class="address-button" ><a id="addr" href="javascript:void();">Search</a></p>
 
     </div>
 
@@ -10,24 +12,62 @@
     </div> -->
 
     <div class="filter-contain">
-      <div class="row">
-        <!-- <div class="col-md-6">
-          <form action="POST">
-            <div id="distance">
-              <span id="distance-value-min"></span>
-              <span id="distance-value-max"></span>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-6">
+              <div class="distance-contain">
+                <p>Max Distance</p>
+                <div id="distance">
+                  <span id="distance-value"></span>
+                </div>
+              </div>
             </div>
-
-          </form>
-        </div> -->
-        <div class="col-md-6">
-          <form action="POST">
-            <div id="distance">
-              <span id="distance-value"></span>
+            <div class="col-md-6">
+              <div class="rating-contain">
+                <p>Lowest Rating</p>
+                <div class="star">
+                  <div class="rating">
+                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
-        <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="type-list">
+              <!-- <div class="row restaurant-list">
+                <div class="col-md-3 restaurant-list">
+                  <button class="restaurant-type selected"> Chinese </button>
+                </div>
+                <div class="col-md-3 restaurant-list">
+                  <button class="restaurant-type selected"> Chinese </button>
+                </div>
+                <div class="col-md-3 restaurant-list">
+                  <button class="restaurant-type selected"> Chinese </button>
+                </div>
+                <div class="col-md-3 restaurant-list">
+                  <button class="restaurant-type selected"> Chinese </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 restaurant-list">
+                  <button class="restaurant-type selected"> Chinese </button>
+                </div>
+                <div class="col-md-3 restaurant-list">
+                  <button class="restaurant-type selected"> Chinese </button>
+                </div>
+                <div class="col-md-3 restaurant-list">
+                  <button class="restaurant-type selected"> Chinese </button>
+                </div>
+                <div class="col-md-3 restaurant-list">
+                  <button class="restaurant-type selected"> Chinese </button>
+                </div>
+              </div> -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -40,13 +80,13 @@
           var label = $('#distance-value');
           label.text($('#distance').slider('value') + " miles");
           var string = $('#distance').text();
-          label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 12);
+          label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 8 - 15);
         },
         slide : function() {
           var label = $('#distance-value');
           label.text($('#distance').slider('value') + " miles");
           var string = $('#distance').text();
-          label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 12);
+          label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 8 - 15);
           console.log(string.substring(0,string.length - 18));
         }
       });
@@ -57,23 +97,28 @@
         // slide: function(event, ui) {
         //   $(ui.handle).find('span').html('$' + ui.value);
         //
-      // .each(function() {
-      //   var opt = $(this).data().uiSlider.options;
-      //   var vals = opt.max - opt.min;
-      //   for (var i = 0; i <= vals; i+=5) {
-      //     var el = $('<label>' + (i + opt.min) + '</label>').addClass("distance-label");
-      //     $("#distance").append(el);
-      //   }
-      // });
       $(document).ready(function() {
         var label = $('#distance-value');
         // var label = $('#distance-value-min');
         // var label2 = $('#distance-value-max');
         label.text($('#distance').slider('value') + " miles");
         var string = $('#distance').text();
-        label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 12);
+        label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 8 - 15);
         // label2.css('left', $('#distance').slider('values', 1) * 3 - 15);
         // label2.text('$' + $('#distance').slider('values', 1));
+        var opt = $('#distance').data().uiSlider.options;
+        var el = $('<label>' + 0 + '</label>').addClass("distance-label-1");
+        var el2 = $('<label>' + 5 + '</label>').addClass("distance-label-2");
+        var el3 = $('<label>' + 10 + '</label>').addClass("distance-label-3");
+        var el4 = $('<label>' + 15 + '</label>').addClass("distance-label-4");
+        var el5 = $('<label>' + 20 + '</label>').addClass("distance-label-5");
+        var el6 = $('<label>' + 25 + '</label>').addClass("distance-label-6");
+        $("#distance").append(el);
+        $("#distance").append(el2);
+        $("#distance").append(el3);
+        $("#distance").append(el4);
+        $("#distance").append(el5);
+        $("#distance").append(el6);
       });
       // $('#distance').bind('slide', function () {
       //   var label = $('#distance-value');
@@ -98,5 +143,24 @@
       //   of: $('#distance a:eq(1)'),
       //   offset: "0, 10"
       // });
+      $(".restaurant-type").click(function(){
+        console.log("hello");
+        if($(this).hasClass("selected")) {
+          $(this).removeClass("selected");
+        }
+        else {
+          $(this).addClass("selected");
+        }
+      });
+      $(function() {
+         $('a#addr').bind('click', function() {
+           $.getJSON('/results', {
+             addr: $('input[name="a"]').val()
+           }, function(data) {
+             console.log(data.result);
+           });
+           return false;
+         });
+       });
     </script>
 {% endblock %}
