@@ -207,12 +207,12 @@ def filter(addr, rad=8000, types=[], rating=0):
         }]
     for restaurant in restaurants:
         if float(restaurant['rating']) < float(rating):
-            del restaurant
+            del restaurants[restaurant]
         else:
             restaurant['category'] = [c[0] for c in restaurant['category']]
             for category in restaurant['category']:
                 if category in types:
-                    del restaurant
+                    del restaurants[restaurant]
                     break
     return restaurants
 
