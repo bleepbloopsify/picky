@@ -10,6 +10,39 @@ import operator
 import random
 
 #SQLITE STUFF
+type_dist = {
+    "Chinese":[
+        "chinese", "hot pot", "shanghainese", "dim sum"
+    ],
+    "Japanese":[
+        "sushi", "live/raw food", "teppanyaki", "japanese", "sushi bars"
+    ],
+    "Diner":[
+        "sandwiches", "american", "diner", "deli", "hot dogs", "burgers", "southern", "breakfast", "fast food"
+    ],
+    "Middle Eastern":[
+        "falafel", "egyptian", "afghan", "persian/iranian", "middle eastern"
+    ],
+    "Indian":[
+        "bangladeshi", "pakistani", "indian"
+    ],
+    "Steakhouse":[
+        "steakhouse"
+    ],
+    "Buffet":[
+        "buffet"
+    ],
+    "Vegan":[
+        "vegetarian", "vegan", "gluten free"
+    ],
+    "Mexican":[
+        "mexican", "texmex"
+    ],
+    "Pizza":[
+        "pizza","italian"
+    ]
+}
+
 def create():
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
@@ -138,13 +171,20 @@ def getTypes(addr,rad=8000):
     url_params = {
     'term':'restaurants',
     'location':addr.replace(' ','+'),
-    'radius':rad,
+    'radius':rad
     }
     raw = request(url_params)
     types = []
     for business in raw['businesses']:
         for category in business['categories']:
-            if category[0] not in types:
+            added = 0
+            for dist in type_dist:
+
+                if category[0].lower() in type_dist[dist]:
+                    if dist not in types:
+                        types += [dist]
+                    added = 1
+            if category[0] not in types and added != 1:
                 types += [category[0]]
     return types
 

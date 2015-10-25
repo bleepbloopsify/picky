@@ -23,6 +23,8 @@ def restaurants():
         rating = details[2]
         types = details[3].split(',')
 
+        session['setrad'] = details[1]
+        session['setrating'] = rating
         session['addr'] = address
         results = util.filter(address,radius,types,rating)
         return render_template('restaurants.html', results=results,categories=util.getTypes(address,radius))
