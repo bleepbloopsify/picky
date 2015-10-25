@@ -2,12 +2,16 @@
 
 {% block body %}
     <div class="home-contain">
+      {{ nav() }}
       <div class="addr-box">
         <input name="address" type = "text" class="address-home">
         <button id="addr" class="address-button" ><span class="glyphicon glyphicon-search"</button>
       </div>
     </div>
-
+    <div class="arrow-down">
+      <span id="arrow" class="glyphicon glyphicon-menu-down"></span>
+    </div>
+    <hr class="seperate">
     <div class="about-contain">
       <div class="container-fluid">
         <div class="row">
@@ -20,7 +24,7 @@
             </div>
           </div>
           <div class="col-md-4">
-            <div class="about-text">
+            <div id="scroll-to" class="about-text">
               <span class="glyphicon glyphicon-cutlery"></span>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at ante erat. Etiam porttitor tristique erat. Duis et turpis vel augue consequat imperdiet vitae non diam. Integer augue neque, congue sit amet sollicitudin non, volutpat a enim. Sed congue sagittis arcu nec imperdiet. Aenean bibendum sed justo in sollicitudin. Proin vestibulum dolor et velit condimentum accumsan. Aenean auctor congue pharetra. Ut pellentesque suscipit elit, non tincidunt leo porttitor eu. Praesent luctus, quam ac volutpat semper, augue orci pellentesque orci, in malesuada erat sem eget mi. Maecenas erat orci, ullamcorper eu ex at, faucibus vehicula libero. Nunc suscipit mattis sem at elementum.
@@ -245,11 +249,14 @@
              $(".about-contain").css("display", "none");
              $(".filter-contain").css("display", "block");
              for (var i = 0; i < data.length; i++){
-               $("#results").append('<div class="col-md-3 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
+               $("#results").append('<div class="col-md-3 col-sm-4 col-xs-6 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
              }
            });
-           return false;
+           $('html, body').animate({
+             scrollTop: ($('#scroll-to').offset().top)
+           },500);
          }
+         return false;
        });
      });
      $(document).on("click", ".restaurant-type", function(){
@@ -274,6 +281,9 @@
                 $("#results").append('<div class="col-md-3 col-sm-4 col-xs-6 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
               }
             });
+            $('html, body').animate({
+              scrollTop: ($('#scroll-to').offset().top)
+            },500);
           }
         }
       });
@@ -322,6 +332,11 @@
       $(document).on("click", "#exit-reg", function(){
         $(".register").css("display", "none");
         $(".cover").css("display", "none");
+      });
+      $(document).on("click", "#arrow", function(){
+        $('html, body').animate({
+          scrollTop: ($('#scroll-to').offset().top)
+        },500);
       });
     </script>
 {% endblock %}

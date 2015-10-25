@@ -5,19 +5,19 @@ input:-webkit-autofill {
 .contain {
   margin-left: auto;
   margin-right: auto;
-  padding-top: 10px;
 }
 .home-contain {
-  width: 1024px;
-  height: 506px;
+  width: 1280px;
+  height: 620px;
   margin-left: auto;
   margin-right: auto;
   background: url("PickyPage1.png") bottom center;
   background-size: cover;
-  margin-bottom: 60px;
   position: relative;
+  margin-bottom: 10px;
 }
 .about-contain {
+  margin-top: 60px;
   height: 300px;
   margin-left: auto;
   margin-right: auto;
@@ -26,7 +26,6 @@ input:-webkit-autofill {
   height: 300px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 50px;
   display: none;
 }
 .navbar {
@@ -49,11 +48,16 @@ input:-webkit-autofill {
 
 .navlink {
   padding-bottom: 10px;
-  padding-top: 5px !important
+  padding-top: 5px !important;
+  color: black !important;
+}
+
+.navlink:hover {
+  color: #B50000 !important;
 }
 
 .link-border {
-  border-right: 1px solid lightgray;
+  border-right: 1px solid #B50000;
 }
 
 .nav li {
@@ -61,7 +65,8 @@ input:-webkit-autofill {
 }
 
 .nav {
-  padding-top: 10px;
+  padding-top: 30px;
+  margin-right: -40px;
 }
 #distance {
   margin: 10px;
@@ -124,6 +129,7 @@ input:-webkit-autofill {
   font-size: 24px;
   unicode-bidi: bidi-override;
   direction: rtl;
+  color: #FFAE00;
 }
 .rating:hover:before {
    content: "\2605";
@@ -134,6 +140,7 @@ input:-webkit-autofill {
   font-size: 24px;
   unicode-bidi: bidi-override;
   direction: rtl;
+  color: #FFAE00;
 }
 .rating:hover:before,
 .rating:hover ~ :before {
@@ -179,8 +186,8 @@ input:-webkit-autofill {
   height: 80px;
 }
 .selected {
-  background-color: red;
-  border: 1px solid red;
+  background-color: #B50000;
+  border: 1px solid #B50000;
   color: white;
 }
 .restaurant-type:focus {
@@ -201,15 +208,15 @@ input:-webkit-autofill {
 }
 .addr-box {
   position: absolute;
-  left: 394px;
-  top: 113px;
+  left: 492px;
+  top: 128px;
 }
 .address-button {
-  width: 54px;
+  width: 60px;
   padding: 0px;
   border: 0px;
   margin-left: -4px;
-  height: 63px;
+  height: 80px;
   background: transparent;
   color: #FFF600;
   font-size: 20px;
@@ -221,8 +228,8 @@ input:-webkit-autofill {
 .address-home {
   background: transparent;
   border: none;
-  width: 211px;
-  height: 58px;
+  width: 270px;
+  height: 75px;
   color: #FFF600;
   font-family: Dotted;
   font-size: 16px;
@@ -350,7 +357,20 @@ input:-webkit-autofill {
 }
 .brand-pic {
   width: 200px;
-  height: 100px;
+  height: 90px;
   background: url("pickylogo.png") center center;
   background-size: cover;
+  margin-left: -60px;
+}
+.seperate {
+  width: 1000px;
+}
+.arrow-down {
+  font-size: 50px;
+  text-align: center;
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  cursor: pointer;
 }
