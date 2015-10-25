@@ -51,6 +51,8 @@
         <button class="random">Random</button>
       </div>
     </div>
+    <div id="edit">
+    </div>
     <div class="fin-box">
       <p> Please Leave A Rating </p>
       <div class="star fin-star">
@@ -63,6 +65,13 @@
   <div class="cover">
   </div>
  <script>
+ // $(document).on("click", "#random", function(){
+ //
+ //   var url = {{randomurl}};
+ //   var form = $('<form style="display:none" action="' + url + '" method="post"></form>');
+ //   $('#edit').append(form);
+ //   form.submit();
+ // });
    $(document).on("click", "#star-1", function(){
      if ($("#star-1")) {
        $(id).removeClass("rating-select");
@@ -126,7 +135,7 @@
    });
    $(document).ready(function() {
      var counter = 5;
-     var loop = {{session['setrating']}};
+     var loop = {{session['rating']}};
      $(".starred > div").children('span').each(function (i, obj) {
        if (counter <= loop) {
          $(obj).addClass("rated-select");

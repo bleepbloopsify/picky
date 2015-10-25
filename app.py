@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, Response, jsonify
 import util
 import hashlib
+import random
 
 app = Flask(__name__)
 app.secret_key = "nothing"
@@ -46,22 +47,27 @@ def results():
      return jsonify(result=result)
 
 @app.route('/history')
-@app.route('/history/<location>/<restaurant>/<category>', methods=['GET','POST'])
-def history(location="",restaurant="",category=""):
+@app.route('/history/<location>/<restaurant>/<category>/<rating>', methods=['GET','POST'])
+def history(location="",restaurant="",category="",rating=0):
     if location=="":
         return redirect('/index')
-    if request.method == "POST":
-        form = request.form
-        rating = form['rating']
-        util.setrating(session['user'], rating, location, restaurant, category)
-    rating = util.getrating(location)
-    if len(rating) > 0:
-        rating = reduce(lambda x, y: x+y, rating)/len(rating)
-        rating = int(rating * 10)  / 10.
-    else:
-        return render_template('rating.html',rating = "NO USER RATING",restaurant=restaurant,location=location.split(','),category=category.split(','))
-
-    return render_template('rating.html',rating = rating,restaurant=restaurant,location=location.split(','),category=category.split(','))
+    # if request.method == "POST":
+    #     form = request.form
+    #     rating = form['rating']
+    #     session['rating'] = rating
+    #     util.setrating(session['user'], rating, location, restaurant, category)
+    #rating = util.getrating(location)
+    session['rating'] = int(rating.strip('?'))
+    # if len(rating) > 0:
+    #     rating = reduce(lambda x, y: x+y, rating)/len(rating)
+    #     rating = int(rating * 10)  / 10.
+    #else:
+    #damn = util.filter(location.split(',')[0] + " " + location.split(',')[1], 10000)
+    #print damn
+    #damn = damn[random.randrange(len(damn))]
+    #damn = '/restaurant/%s,%s,%s/%s/%s/%s'%(damn['location'][0],damn['location'][1],damn['location'][2],damn['name'],catformat(damn['category']),damn['rating'])
+    return render_template('rating.html',restaurant=restaurant,location=location.split(','),category=category.split(','))
+    #return render_template('rating.html',rating = rating,restaurant=restaurant,location=location.split(','),category=category.split(','))
 
 @app.route('/login', methods = ["GET","POST"] )
 def login():
