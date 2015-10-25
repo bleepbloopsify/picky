@@ -2,14 +2,42 @@
 
 {% block body %}
     <div class="home-contain">
-      <input name="address" type = "text" class="address-home">
-      <p class="address-button" ><a id="addr" href="javascript:void();">Search</a></p>
-
+      <div class="addr-box">
+        <input name="address" type = "text" class="address-home">
+        <button id="addr" class="address-button" >Search</button>
+      </div>
     </div>
 
-    <!-- <div class="about-contain">
-
-    </div> -->
+    <div class="about-contain">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="about-text">
+              <span class="glyphicon glyphicon-heart"></span>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at ante erat. Etiam porttitor tristique erat. Duis et turpis vel augue consequat imperdiet vitae non diam. Integer augue neque, congue sit amet sollicitudin non, volutpat a enim. Sed congue sagittis arcu nec imperdiet. Aenean bibendum sed justo in sollicitudin. Proin vestibulum dolor et velit condimentum accumsan. Aenean auctor congue pharetra. Ut pellentesque suscipit elit, non tincidunt leo porttitor eu. Praesent luctus, quam ac volutpat semper, augue orci pellentesque orci, in malesuada erat sem eget mi. Maecenas erat orci, ullamcorper eu ex at, faucibus vehicula libero. Nunc suscipit mattis sem at elementum.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="about-text">
+              <span class="glyphicon glyphicon-cutlery"></span>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at ante erat. Etiam porttitor tristique erat. Duis et turpis vel augue consequat imperdiet vitae non diam. Integer augue neque, congue sit amet sollicitudin non, volutpat a enim. Sed congue sagittis arcu nec imperdiet. Aenean bibendum sed justo in sollicitudin. Proin vestibulum dolor et velit condimentum accumsan. Aenean auctor congue pharetra. Ut pellentesque suscipit elit, non tincidunt leo porttitor eu. Praesent luctus, quam ac volutpat semper, augue orci pellentesque orci, in malesuada erat sem eget mi. Maecenas erat orci, ullamcorper eu ex at, faucibus vehicula libero. Nunc suscipit mattis sem at elementum.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="about-text">
+              <span class="glyphicon glyphicon-search"></span>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at ante erat. Etiam porttitor tristique erat. Duis et turpis vel augue consequat imperdiet vitae non diam. Integer augue neque, congue sit amet sollicitudin non, volutpat a enim. Sed congue sagittis arcu nec imperdiet. Aenean bibendum sed justo in sollicitudin. Proin vestibulum dolor et velit condimentum accumsan. Aenean auctor congue pharetra. Ut pellentesque suscipit elit, non tincidunt leo porttitor eu. Praesent luctus, quam ac volutpat semper, augue orci pellentesque orci, in malesuada erat sem eget mi. Maecenas erat orci, ullamcorper eu ex at, faucibus vehicula libero. Nunc suscipit mattis sem at elementum.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="filter-contain">
       <div class="container-fluid">
@@ -28,7 +56,7 @@
                 <p>Lowest Rating</p>
                 <div class="star">
                   <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                    <span id="star-1">☆</span><span id="star-2">☆</span><span id="star-3">☆</span><span id="star-4">☆</span><span id="star-5">☆</span>
                   </div>
                 </div>
               </div>
@@ -37,8 +65,8 @@
         </div>
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
-            <div class="type-list" id="results">
-              <div class="row">
+            <div class="type-list">
+              <div class="row" id="results">
 
               <!-- <div class="row restaurant-list">
                 <div class="col-md-3 restaurant-list">
@@ -68,13 +96,45 @@
                   <button class="restaurant-type selected"> Chinese </button>
                 </div>
               </div> -->
+              </div>
             </div>
+            <button id="sendFilter">Search</button>
           </div>
         </div>
       </div>
     </div>
+    <div class="login-form">
+      <div class="login">
+        <h1 class="login-title">Login</h1>
+        <h3 class="login-msg">Don't have an account? <a href="/register">Register</a> here.</h3>
+        <h3 class="error-message">{{error}}</h3>
+        <form class="login-form" method="post">
+          <p>Username:</p>
+          <input type="text" name="user">
+          <p>Password:</p>
+          <input type="password" name="pwd">
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </div>
 
     <script>
+      var stars = 0;
+      $(document).on("click", "#star-1", function(){
+        stars = 1;
+      }
+      $(document).on("click", "#star-2", function(){
+        stars = 2;
+      }
+      $(document).on("click", "#star-3", function(){
+        stars = 3;
+      }
+      $(document).on("click", "#star-4", function(){
+        stars = 4;
+      }
+      $(document).on("click", "#star-1", function(){
+        stars = 5;
+      }
       $( "#distance" ).slider( {
         value: 25,
         max: 25,
@@ -112,15 +172,16 @@
         $("#distance").append(el6);
       });
       $(function() {
-       $('a#addr').bind('click', function() {
+       $('#addr').bind('click', function() {
          $.getJSON('/results', {
            addr: $('input[name="address"]').val()
          }, function(data) {
            var data = data.result;
+           $(".about-contain").css("display", "none");
+           $(".filter-contain").css("display", "block");
            for (var i = 0; i < data.length; i++){
              $("#results").append('<div class="col-md-3 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
            }
-           $("#results").append('</div>')
          });
          return false;
        });
@@ -134,5 +195,40 @@
          $(this).addClass("selected");
        }
      });
+     $("input").keypress(function(event) {
+        if (event.which == 13) {
+          event.preventDefault();
+          $.getJSON('/results', {
+            addr: $('input[name="address"]').val()
+          }, function(data) {
+            var data = data.result;
+            $(".about-contain").css("display", "none");
+            $(".filter-contain").css("display", "block");
+            for (var i = 0; i < data.length; i++){
+              $("#results").append('<div class="col-md-3 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
+            }
+          });
+        }
+      });
+      var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+          sParameterName = sURLVariables[i].split('=');
+
+          if (sParameterName[0] === sParam) {
+              return sParameterName[1] === undefined ? true : sParameterName[1];
+          }
+        }
+      };
+      $(document).on("click", "#sendFilter", function(){
+        var sendString = getUrlParameter("address") + ";";
+        sendString+= $('#distance').slider('value');
+        sendString+= stars;
+        console.log(sendString);
+      });
     </script>
 {% endblock %}
