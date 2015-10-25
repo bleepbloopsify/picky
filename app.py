@@ -106,7 +106,10 @@ def address():
 
 @app.route("/about")
 def about():
-  return render_template("/about.html")
+    about = ""
+    with open("README.txt") as file:
+        about = file.read()
+    return render_template("/about.html",about=about)
 
 
 if __name__ == '__main__':
