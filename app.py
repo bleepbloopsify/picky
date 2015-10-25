@@ -14,9 +14,13 @@ def index():
 def restaurants():
     if request.method == "POST":
         form = request.form
-        address = form['address']
-        radius = form['radius']
-        types = form['types']
+        details = form['details']
+        details = details.strip().strip(',').split(';')
+        #address radius ratings categories
+        address = details[0]
+        radius = details[1]
+        ratings = details[2]
+        types = details[3].split(',')
         results = util.filter(radius, types, address)
         return render_template('restaurants.html', results=results)
     return redirect('/index')
