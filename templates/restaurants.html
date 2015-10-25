@@ -43,10 +43,8 @@
           </div>
         </div>
         <div class="col-sm-2">
-          <div class="starry">
-            <div id="{{loop.index}}">
-              <span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span>
-            </div>
+          <div class="{{result['rating']}} starry">
+            <span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span>
           </div>
         </div>
         <div class="col-sm-3">
@@ -66,6 +64,18 @@
 <script>
   var stars = 0;
   var enters = 0;
+  $(".starry").each(function(i, obj) {
+    var loop = ($(obj).attr("class"))[0];
+    console.log(loop);
+    var counter = 5;
+    $(obj).children('span').each(function (i, obj) {
+      if (counter <= loop) {
+        $(obj).addClass("rated-select");
+        $(obj).removeClass("rated");
+      }
+      counter--;
+    });
+  });
   $(document).on("click", "#star-1", function(){
     if ($("#star-1")) {
       $(id).removeClass("rating-select");
