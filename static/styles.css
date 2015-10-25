@@ -348,3 +348,9 @@ input:-webkit-autofill {
 .exit:focus {
   outline: none;
 }
+.brand-pic {
+  width: 200px;
+  height: 100px;
+  background: url("pickylogo.png") center center;
+  background-size: cover;
+}
