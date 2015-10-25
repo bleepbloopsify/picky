@@ -6,8 +6,9 @@ app.secret_key = "nothing"
 util.create()
 
 @app.route('/')
-@app.route('/index',methods=["GET", "POST"])
+@app.route('/index')
 def index():
+    util.getUserCategories(session['user'])
     return render_template("index.html")
 
 @app.route('/restaurants', methods=["GET","POST"])
@@ -22,20 +23,25 @@ def restaurants():
     if request.method == "GET":
         return render_template('restaurants.html')
 
+
 @app.route('/results')
 def results():
      args = request.args
      addr = args.get('addr')
      result = util.getTypes(addr)
-     print jsonify(result=result)
      return jsonify(result=result)
 
 @app.route('/history')
 @app.route('/history/<location>', methods=['GET','POST'])
 def history(location=""):
     if location=="":
-        return redirect('/')
-
+        return redirect('/index')
+    if request.method == "POST":
+        form = request.form
+        rating = form['rating']
+        restaurant = form['restaurant']
+        category = form['category']
+        util.setrating(session['user'], rating, location, restaurant, category)
     rating = util.getrating(location)
     rating = reduce(lambda x, y: x+y, rating)/len(rating)
     rating = int(rating * 10)  / 10.

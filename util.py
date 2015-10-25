@@ -14,7 +14,7 @@ def create():
     createlogin = "CREATE TABLE IF NOT EXISTS login (username text, password text)"
     c.execute(createlogin)
 
-    createinfo = "CREATE TABLE IF NOT EXISTS info (username text, restaurant text, location text, rating real, day text)"
+    createinfo = "CREATE TABLE IF NOT EXISTS info (username text, restaurant text, location text, rating real, day text, category text)"
     c.execute(createinfo)
     conn.commit()
 
@@ -45,11 +45,11 @@ def authenticate(username, password):
         return ""
     return "Incorrect Password"
 
-def setrating(uname, rating, location, restaurant):
+def setrating(uname, rating, location, restaurant, category):
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
-    query = "INSERT INTO info VALUES (\"%(username)s\", \"%(restaurant)s\", \"%(location)s\", \"%(rating)f\", \"%(day)s\")"%({
-    "username":uname,"restaurant":restaurant,"location":location, "rating":rating,"day":datetime.date.today()})
+    query = "INSERT INTO info VALUES (\"%(username)s\", \"%(restaurant)s\", \"%(location)s\", \"%(rating)f\", \"%(day)s\", \"%(category)s\")"%({
+    "username":uname,"restaurant":restaurant,"location":location, "rating":rating,"day":datetime.date.today(), "category":category})
     c.execute(query)
     conn.commit()
 
@@ -62,8 +62,19 @@ def getrating(location, restaurant):
     conn.commit()
     return data
 
-#def record_restaurant():
+def getUserCategories(uname):
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    query = "SELECT category FROM info WHERE username=:uname"
+    data = c.execute(query, {"uname":uname}).fetchall()
+    cats = {}
+    for d in [d[0] for d in data]:
+        cats[d] += 1
+    conn.commit()
+    return data
 
+#def record_restaurant():
+#API STUFF
 API_HOST = 'api.yelp.com'
 DEFAULT_TERM = 'dinner'
 DEFAULT_LOCATION = 'San Francisco, CA'
