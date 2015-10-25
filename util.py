@@ -117,7 +117,7 @@ def request(url_params=None,host=API_HOST, path=SEARCH_PATH):
 
     return response
 
-def filter(addr, rad, types="bars"):
+def filter(addr, rad, types):
     url_params = {
         'location':addr.replace(' ','+'),
         'category_filter':types,

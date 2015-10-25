@@ -22,9 +22,11 @@ def restaurants():
     if request.method == "GET":
         return render_template('restaurants.html')
 
-@app.template_filter('results')
-def results(addr, radius, types=[]):
-    return util.filter(addr, radius, types)
+@app.route('/results')
+def results():
+     args = request.args
+     addr = args.get('addr')
+     return util.filter(addr, 8000, [])
 
 @app.route('/history')
 @app.route('/history/<location>', methods=['GET','POST'])
@@ -36,7 +38,6 @@ def history(location=""):
     rating = reduce(lambda x, y: x+y, rating)/len(rating)
     rating = int(rating * 10)  / 10.
     return render_template('rating.html',rating = rating)
-
 
 @app.route('/login', methods = ["GET","POST"] )
 def login():
