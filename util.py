@@ -117,9 +117,7 @@ def request(url_params=None,host=API_HOST, path=SEARCH_PATH):
 
     return response
 
-
-
-def filter(rad, types="bars",addr="345 Chambers Street"):
+def filter(addr, rad, types="bars"):
     url_params = {
         'location':addr.replace(' ','+'),
         'category_filter':types,

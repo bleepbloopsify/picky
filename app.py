@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, Response
 import util
 
 app = Flask(__name__)
@@ -6,10 +6,25 @@ app.secret_key = "nothing"
 util.create()
 
 @app.route('/')
-@app.route('/index', methods=['GET','POST'])
+@app.route('/index',methods=["GET", "POST"])
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
+@app.route('/restaurants', methods=["GET","POST"])
+def restaurants():
+    if request.method == "POST":
+        form = request.form
+        address = form['address']
+        radius = form['radius']
+        types = form['types']
+        results = util.filter(radius, types, address)
+        return render_template('restaurants.html', results=results)
+    if request.method == "GET":
+        return render_template('restaurants.html')
+
+@app.template_filter('results')
+def results(addr, radius, types=[]):
+    return util.filter(addr, radius, types)
 
 @app.route('/history')
 @app.route('/history/<location>', methods=['GET','POST'])
@@ -47,7 +62,11 @@ def register():
         pwdtwo = form.get('pwd2')
         if pwd != pwdtwo:
             return render_template('register.html',err="Passwords Do Not Match")
-        if not util.newUser(user,pwd):
+        elif len(pwd) < 6:
+            return render_template('register.html', err="Password must be at least 6 characters")
+        elif not pwd.isalnum():
+            return render_template('register.html', err="Password cannot contain special characters")
+        elif not util.newUser(user,pwd):
             return render_template('register.html', err="Username Taken")
         else:
             session['user'] = user
