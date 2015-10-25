@@ -499,6 +499,9 @@ input:-webkit-autofill {
   height: 30px;
   width: 100px;
 }
+.choose:focus {
+  outline: none;
+}
 .hideornah {
   display: none;
 }

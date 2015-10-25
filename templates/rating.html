@@ -65,13 +65,19 @@
   <div class="cover">
   </div>
  <script>
- // $(document).on("click", "#random", function(){
- //
- //   var url = {{randomurl}};
- //   var form = $('<form style="display:none" action="' + url + '" method="post"></form>');
- //   $('#edit').append(form);
- //   form.submit();
- // });
+   $(document).on("click",".back", function(){
+     var url = "{{session['details']}}";
+     var form = $('<form style="display:none" action="/restaurants" method="post"><input type="text" name="details" value="' + url + '" >' +'</form>');
+     $('#edit').append(form);
+     form.submit();
+   })
+   $(document).on("click", ".random", function(){
+
+     var url = "{{randomurl}}";
+     var form = $('<form style="display:none" action="' + url + '" method="post"></form>');
+     $('#edit').append(form);
+     form.submit();
+   });
    $(document).on("click", "#star-1", function(){
      if ($("#star-1")) {
        $(id).removeClass("rating-select");

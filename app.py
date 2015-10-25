@@ -17,6 +17,7 @@ def restaurants():
     if request.method == "POST":
         form = request.form
         details = form['details']
+        session['details'] = details
         details = [c.strip() for c in details.strip().strip(',').split(';')]
         #address radius ratings categories
         address = details[0]
@@ -67,16 +68,16 @@ def history(location="",restaurant="",category="",rating=0):
     #     session['rating'] = rating
     #     util.setrating(session['user'], rating, location, restaurant, category)
     #rating = util.getrating(location)
-    session['rating'] = int(rating.strip('?'))
+    session['rating'] = rating
     # if len(rating) > 0:
     #     rating = reduce(lambda x, y: x+y, rating)/len(rating)
     #     rating = int(rating * 10)  / 10.
     #else:
-    #damn = util.filter(location.split(',')[0] + " " + location.split(',')[1], 10000)
-    #print damn
-    #damn = damn[random.randrange(len(damn))]
-    #damn = '/restaurant/%s,%s,%s/%s/%s/%s'%(damn['location'][0],damn['location'][1],damn['location'][2],damn['name'],catformat(damn['category']),damn['rating'])
-    return render_template('rating.html',restaurant=restaurant,location=location.split(','),category=category.split(','))
+    damn = util.filter(session['addr'], 10000)
+    damn = damn[random.randrange(len(damn))]
+    print damn
+    damn = '/history/%s,%s/%s/%s/%s'%(damn['location'][0],damn['location'][1],damn['name'],catformat(damn['category']),damn['rating'])
+    return render_template('rating.html',restaurant=restaurant,location=location.split(','),category=category.split(','), randomurl=damn)
     #return render_template('rating.html',rating = rating,restaurant=restaurant,location=location.split(','),category=category.split(','))
 
 @app.route('/login', methods = ["GET","POST"] )
