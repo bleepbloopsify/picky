@@ -227,7 +227,7 @@
         var sendString = $('input[name="address"]').val() + ";";
         var restaurants = "";
         $('.restaurant-type').each(function(i, obj) {
-          if ($(obj).hasClass("selected")) {
+          if (!$(obj).hasClass("selected")) {
             restaurants += $(obj).text() + ",";
           }
         });
