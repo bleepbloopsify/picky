@@ -13,7 +13,7 @@ def index():
 @app.route('/restaurants', methods=["GET","POST"])
 def restaurants():
     if request.method == "POST":
-        form = request.form
+        form = request.data
         details = form['details']
         details = details.strip().strip(',').split(';')
         #address radius ratings categories
@@ -90,4 +90,4 @@ def address():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run()
+    app.run(host = "0.0.0.0", port = 8080) 

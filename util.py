@@ -6,6 +6,8 @@ import json
 import urllib
 import urllib2
 import datetime
+import operator
+import random
 
 #SQLITE STUFF
 def create():
@@ -166,3 +168,38 @@ def filter(addr, rad=8000, types=[], rating=0):
         elif float(restaurant['rating']) < rating:
             del restaurants[restaurant]
     return restaurants
+
+
+def suggest(uname, restaurants):
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    query = "SELECT category FROM info WHERE username=:uname"
+    data = c.execute(query, {"uname":uname}).fetchall()
+    cats = {}
+    for d in [d[0] for d in data]:
+        if d not in cats:
+            cats[d] = 1
+        else:
+            cats[d] += 1
+    fav = ""
+    most_visit = 0
+    for k,v in cats:
+        if v > most_visit:
+            fav = k
+    a = random.randrange(99)
+    choices = []
+    if a >= 0 and a < 30:
+        for restaurant in restaurants:
+            if restaurant["category"] == fav:
+                choices += [restaurant["name"]]
+        return choices[random.randrange(choices.len)]
+    elif a >= 30 and a < 85:
+        for restaurant in restaurants:
+            if restaurant["category"] != fav and restaurant["rating"] > -1:
+                choices += [restaurant["name"]]
+        return choices[random.randrange(choices.len)]
+    else:
+        for restaurant in restaurants:
+            choices += [restaurant["name"]]
+        return choices[random.randrange(choices.len)]
+        
