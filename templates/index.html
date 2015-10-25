@@ -122,19 +122,19 @@
       var stars = 0;
       $(document).on("click", "#star-1", function(){
         stars = 1;
-      }
+      });
       $(document).on("click", "#star-2", function(){
         stars = 2;
-      }
+      });
       $(document).on("click", "#star-3", function(){
         stars = 3;
-      }
+      });
       $(document).on("click", "#star-4", function(){
         stars = 4;
-      }
+      });
       $(document).on("click", "#star-1", function(){
         stars = 5;
-      }
+      });
       $( "#distance" ).slider( {
         value: 25,
         max: 25,
@@ -149,7 +149,6 @@
           label.text($('#distance').slider('value') + " miles");
           var string = $('#distance').text();
           label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 8 - 15);
-          console.log(string.substring(0,string.length - 18));
         }
       });
       $(document).ready(function() {
@@ -224,9 +223,16 @@
         }
       };
       $(document).on("click", "#sendFilter", function(){
-        var sendString = getUrlParameter("address") + ";";
-        sendString+= $('#distance').slider('value');
-        sendString+= stars;
+        var sendString = $('input[name="address"]').val() + ";";
+        var restaurants = "";
+        $('.restaurant-type').each(function(i, obj) {
+          if ($(obj).hasClass("selected")) {
+            restaurants += $(obj).text() + ",";
+          }
+        });
+        sendString+= $('#distance').slider('value') + ";";
+        sendString+= stars + ";";
+        sendString+=restaurants;
         console.log(sendString);
       });
     </script>

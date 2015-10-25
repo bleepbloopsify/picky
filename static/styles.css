@@ -166,7 +166,7 @@
 }
 .selected {
   background-color: red;
-  border: none;
+  border: 1px solid red;
   color: white;
 }
 .restaurant-type:focus {
