@@ -1,11 +1,15 @@
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px black inset;
+    -webkit-text-fill-color: #FFF600 !important;
+}
 .contain {
   margin-left: auto;
   margin-right: auto;
   padding-top: 10px;
 }
 .home-contain {
-  width: 1280px;
-  height: 560px;
+  width: 1024px;
+  height: 506px;
   margin-left: auto;
   margin-right: auto;
   background: url("PickyPage1.png") bottom center;
@@ -187,18 +191,31 @@
 }
 .addr-box {
   position: absolute;
-  left: 800px;
-  top: 300px;
+  left: 394px;
+  top: 113px;
 }
 .address-button {
-  visibility: hidden;
+  width: 54px;
+  padding: 0px;
+  border: 0px;
+  margin-left: -4px;
+  height: 63px;
+  background: transparent;
+  color: #FFF600;
+  font-size: 20px;
+  border-left: dotted 4px #FFF600;
 }
 .address-home {
   background: transparent;
   border: none;
-  width: 200px;
-  height: 40px;
-  font-size: 20px;
+  width: 211px;
+  height: 58px;
+  color: #FFF600;
+  font-family: Dotted;
+  font-size: 16px;
+}
+.address-home:focus {
+  outline: none
 }
 
 .login {
@@ -283,4 +300,8 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+@font-face {
+    font-family: Dotted;
+    src: url("Dots.ttf");
 }
