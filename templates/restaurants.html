@@ -34,6 +34,11 @@
       </div>
     </div>
   </div>
+  <div class="see-more">
+    <p>More Filtering</p>
+    <span id="see-more" class="glyphicon glyphicon-menu-down"></span>
+  </div>
+  <hr class="res-line">
   {% for result in results %}
     <div class="result-row">
       <div class="row">
@@ -55,7 +60,10 @@
           </div>
         </div>
         <div class="col-sm-2">{{result['distance']}}</div>
-        <div class="col-sm-2"><a href="{{ '/history/%s,%s,%s/%s/%s'%(result['location'][0],result['location'][2],result['location'][3],result['name'],result['category']) }}">Pick me!</a>
+        <div class="col-sm-2">
+          <form action="{{ '/history/%s,%s,%s/%s/%s'%(result['location'][0],result['location'][2],result['location'][3],result['name'],result['category']) }}">
+            <button type="submit" class="choose">Pick me!</button>
+          </form>
       </div>
     </div>
     <hr class="res-line">
@@ -74,15 +82,6 @@
       }
       counter--;
     });
-  });
-  $(".star").children('span').each(function (i, obj) {
-    var loop = {{session['setrating']}};
-    var counter = 5;
-    if (counter <= loop) {
-      $(obj).addClass("rating-selected");
-      $(obj).removeClass("rating");
-    }
-    counter--;
   });
   $(document).on("click", "#star-1", function(){
     if ($("#star-1")) {
@@ -182,6 +181,15 @@
     $("#distance").append(el6);
     $(".address-home").focus();
     $(".cover").height($(document).height());
+    var counter = 5;
+    var loop = {{session['setrating']}};
+    $(".star > div").children('span').each(function (i, obj) {
+      if (counter <= loop) {
+        $(obj).addClass("rating-select");
+        $(obj).removeClass("rating");
+      }
+      counter--;
+    });
   });
   $(function() {
    $('#addr').bind('click', function() {
