@@ -187,7 +187,7 @@ def getTypes(addr,rad=8000):
                 types += [category[0]]
     return types
 
-def filter(addr, rad=8000, types=[], rating=0):
+def filter(addr, rad=8000, types=[] , rating=0):
     addr = addr.strip()
     url_params = {
         'term':'restaurants',
@@ -207,14 +207,24 @@ def filter(addr, rad=8000, types=[], rating=0):
                         added = 1
             if category[0] not in categories and added != 1:
                 categories += [category[0]]
-        restaurants += [{
+        if 'distance' in business:
+            restaurants += [{
             'name':business['name'],
             'location':business['location']['display_address'],
             'category':categories,
             'rating':business['rating'],
             'distance':str(int((business['distance'] / 1609) * 100) / 100.) + 'mi',
             'link':business['url']
-        }]
+            }]
+        else:
+            restaurants += [{
+            'name':business['name'],
+            'location':business['location']['display_address'],
+            'category':categories,
+            'rating':business['rating'],
+            #'distance':str(int((business['distance'] / 1609) * 100) / 100.) + 'mi',
+            'link':business['url']
+            }]
     final =[]
     for restaurant in restaurants:
         b = False
@@ -232,43 +242,43 @@ def filter(addr, rad=8000, types=[], rating=0):
     return final
 
 
-def suggest(uname, restaurants):
-    conn = sqlite3.connect("database.db")
-    c = conn.cursor()
-    query = "SELECT category FROM info WHERE username=:uname"
-    data = c.execute(query, {"uname":uname}).fetchall()
-    cats = {}
-    for d in [d[0] for d in data]:
-        for s in d.split(','):
-            if s not in cats:
-                cats[s] = 1
-            else:
-                cats[s] += 1
-    fav = "helpme"
-    most_visit = -1
-    for k,v in cats.iteritems():
-        if v > most_visit:
-            fav = k
-    a = random.randrange(99)
-    choices = []
-    if fav == "helpme":
-        choices = [f['name'] for f in restaurants]
-        return choices[random.randrange(len(choices))]
-    elif a >= 0 and a < 30:
-        for restaurant in restaurants:
-            for  c in restaurant["category"]:
-                if c == fav:
-                    choices += [restaurant["name"]]
-                    break
-        return choices[random.randrange(len(choices))]
-    elif a >= 30 and a < 85:
-        for restaurant in restaurants:
-            for  c in restaurant["category"]:
-                if c != fav:
-                    choices += [restaurant["name"]]
-                    break
-        return choices[random.randrange(len(choices))]
-    else:
-        for restaurant in restaurants:
-            choices += [restaurant["name"]]
-        return choices[random.randrange(len(choices))]
+# def suggest(uname, restaurants):
+#     conn = sqlite3.connect("database.db")
+#     c = conn.cursor()
+#     query = "SELECT category FROM info WHERE username=:uname"
+#     data = c.execute(query, {"uname":uname}).fetchall()
+#     cats = {}
+#     for d in [d[0] for d in data]:
+#         for s in d.split(','):
+#             if s not in cats:
+#                 cats[s] = 1
+#             else:
+#                 cats[s] += 1
+#     fav = "helpme"
+#     most_visit = -1
+#     for k,v in cats.iteritems():
+#         if v > most_visit:
+#             fav = k
+#     a = random.randrange(99)
+#     choices = []
+#     if fav == "helpme":
+#         choices = [f['name'] for f in restaurants]
+#         return choices[random.randrange(len(choices))]
+#     elif a >= 0 and a < 30:
+#         for restaurant in restaurants:
+#             for  c in restaurant["category"]:
+#                 if c == fav:
+#                     choices += [restaurant["name"]]
+#                     break
+#         return choices[random.randrange(len(choices))]
+#     elif a >= 30 and a < 85:
+#         for restaurant in restaurants:
+#             for  c in restaurant["category"]:
+#                 if c != fav:
+#                     choices += [restaurant["name"]]
+#                     break
+#         return choices[random.randrange(len(choices))]
+#     else:
+#         for restaurant in restaurants:
+#             choices += [restaurant["name"]]
+#         return choices[random.randrange(len(choices))]

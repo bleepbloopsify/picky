@@ -82,7 +82,7 @@
           </div> 
         </div>
         <div class="col-sm-2">
-          <form action="{{ '/history/%s,%s,%s/%s/%s'%(result['location'][0],result['location'][2],result['location'][3],result['name'],result['category']) }}">
+          <form action="{{ '/history/%s,%s,%s/%s/%s/%d'%(result['location'][0],result['location'][2],result['location'][3],result['name'],result['category'],result['rating']) }}">
             <button type="submit" class="choose">Pick me!</button>
           </form>
       </div>
