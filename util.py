@@ -146,6 +146,7 @@ def getTypes(addr,rad=8000):
     return types
 
 def filter(addr, rad=8000, types=[], rating=0):
+    print types,rating
     url_params = {
         'term':'restaurants',
         'location':addr.replace(' ','+'),
@@ -162,13 +163,21 @@ def filter(addr, rad=8000, types=[], rating=0):
             'rating':business['rating'],
             'distance':str(business['distance'])[:str(business['distance']).find('.')+1] + 'm'
         }]
-    print "wher am i"
     for restaurant in restaurants:
-        if restaurant['category'] in types:
-            print "oops"
+        print "hello"
+        print restaurant['category']
+        if float(restaurant['rating']) < float(rating):
+            print float(restaurant['rating'])
+            print "goodby"
             del restaurant
-        elif float(restaurant['rating']) < rating:
-            del restaurant
+        else:
+            restaurant['category'] = [c[0] for c in restaurant['category']]
+            print restaurant['category']
+            for category in restaurant['category']:
+                if category in types:
+                    print "bye"
+                    del restaurant
+                    break
     return restaurants
 
 
@@ -183,25 +192,32 @@ def suggest(uname, restaurants):
             cats[d] = 1
         else:
             cats[d] += 1
-    fav = ""
-    most_visit = 0
-    for k,v in cats:
+    fav = "helpme"
+    most_visit = -1
+    for k,v in cats.iteritems():
+        print k,v
         if v > most_visit:
             fav = k
     a = random.randrange(99)
     choices = []
-    if a >= 0 and a < 30:
+    if fav == "helpme":
+        choices = [f['name'] for f in restaurants]
+        return choices[random.randrange(len(choices))]
+    elif a >= 0 and a < 30:
         for restaurant in restaurants:
-            if restaurant["category"] == fav:
-                choices += [restaurant["name"]]
-        return choices[random.randrange(choices.len)]
+            for  c in restaurant["category"]:
+                if c == fav:
+                    choices += [restaurant["name"]]
+                    break
+        return choices[random.randrange(len(choices))]
     elif a >= 30 and a < 85:
         for restaurant in restaurants:
-            if restaurant["category"] != fav and restaurant["rating"] > -1:
-                choices += [restaurant["name"]]
-        return choices[random.randrange(choices.len)]
+            for  c in restaurant["category"]:
+                if c != fav:
+                    choices += [restaurant["name"]]
+                    break
+        return choices[random.randrange(len(choices))]
     else:
         for restaurant in restaurants:
             choices += [restaurant["name"]]
-        return choices[random.randrange(choices.len)]
-        
+        return choices[random.randrange(len(choices))]
