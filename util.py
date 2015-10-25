@@ -143,7 +143,7 @@ def getTypes(addr,rad=8000):
                 types += [category[0]]
     return types
 
-def filter(addr, rad=8000, types=[]):
+def filter(addr, rad=8000, types=[], rating=0):
     url_params = {
         'term':'restaurants',
         'location':addr.replace(' ','+'),
@@ -162,5 +162,7 @@ def filter(addr, rad=8000, types=[]):
         }]
     for restaurant in restaurants:
         if restaurant['category'] in types:
+            del restaurants[restaurant]
+        elif float(restaurant['rating']) < rating:
             del restaurants[restaurant]
     return restaurants
