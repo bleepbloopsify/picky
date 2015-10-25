@@ -24,12 +24,21 @@ def restaurants():
         types = details[3].split(',')
 
 
+
         session['setrad'] = details[1]
         session['setrating'] = rating
         session['addr'] = address
         results = util.filter(address,radius,types,rating)
+        for result in results:
+            result['category'] = catformat(result['category'])
         return render_template('restaurants.html', results=results,categories=util.getTypes(address,radius))
     return redirect('/index')
+
+def catformat(cats):
+    dog = ""
+    for cat in cats:
+        dog += cat + ","
+    return dog[:-1]
 
 @app.route('/results')
 def results():
@@ -52,9 +61,9 @@ def history(location="",restaurant="",category=""):
         rating = reduce(lambda x, y: x+y, rating)/len(rating)
         rating = int(rating * 10)  / 10.
     else:
-        return render_template('rating.html',rating = "NO USER RATING",restaurant=restaurant,location=location.split(','),category=category)
-    print category
-    return render_template('rating.html',rating = rating,restaurant=restaurant,location=location.split(','),category=category)
+        return render_template('rating.html',rating = "NO USER RATING",restaurant=restaurant,location=location.split(','),category=category.split(','))
+
+    return render_template('rating.html',rating = rating,restaurant=restaurant,location=location.split(','),category=category.split(','))
 
 @app.route('/login', methods = ["GET","POST"] )
 def login():
