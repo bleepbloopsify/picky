@@ -117,20 +117,23 @@ def request(url_params=None,host=API_HOST, path=SEARCH_PATH):
 
     return response
 
-def filter(addr, rad, types):
+def filter(addr, rad=8000, types="bars"):
+    print "ok!"
     url_params = {
         'location':addr.replace(' ','+'),
         'category_filter':types,
         'radius':rad,
         'limit':5
     }
+    print "Ok!"
     raw = request(url_params)
     restaurants = []
     for business in raw['businesses']:
-        restaurants+= [{
+        restaurants += [{
             'name':business['name'],
             'location':business['location']['display_address'],
             'rating':business['rating'],
             'distance':str(business['distance'])[:str(business['distance']).find('.')+1] + 'm'
         }]
+        print "ok!"
     return restaurants

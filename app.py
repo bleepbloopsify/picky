@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, Response
+from flask import Flask, render_template, request, session, redirect, url_for, Response, jsonify
 import util
 
 app = Flask(__name__)
@@ -25,8 +25,10 @@ def restaurants():
 @app.route('/results')
 def results():
      args = request.args
+     print args
      addr = args.get('addr')
-     return util.filter(addr, 8000, '')
+     print addr
+     return jsonify(result=util.filter(addr))
 
 @app.route('/history')
 @app.route('/history/<location>', methods=['GET','POST'])
