@@ -158,15 +158,17 @@ def filter(addr, rad=8000, types=[], rating=0):
         restaurants += [{
             'name':business['name'],
             'location':business['location']['display_address'],
-            'category':business['category_filter'],
+            'category':business['categories'],
             'rating':business['rating'],
             'distance':str(business['distance'])[:str(business['distance']).find('.')+1] + 'm'
         }]
+    print "wher am i"
     for restaurant in restaurants:
         if restaurant['category'] in types:
-            del restaurants[restaurant]
+            print "oops"
+            del restaurant
         elif float(restaurant['rating']) < rating:
-            del restaurants[restaurant]
+            del restaurant
     return restaurants
 
 

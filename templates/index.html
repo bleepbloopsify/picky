@@ -4,7 +4,7 @@
     <div class="home-contain">
       <div class="addr-box">
         <input name="address" type = "text" class="address-home">
-        <button id="addr" class="address-button" >Search</button>
+        <button id="addr" class="address-button" ><span class="glyphicon glyphicon-search"</button>
       </div>
     </div>
 
@@ -169,6 +169,7 @@
         $("#distance").append(el4);
         $("#distance").append(el5);
         $("#distance").append(el6);
+        $(".address-home").focus();
       });
       $(function() {
        $('#addr').bind('click', function() {
@@ -226,14 +227,20 @@
         var sendString = $('input[name="address"]').val() + ";";
         var restaurants = "";
         $('.restaurant-type').each(function(i, obj) {
-          if ($(obj).hasClass("selected")) {
+          if (!$(obj).hasClass("selected")) {
             restaurants += $(obj).text() + ",";
           }
         });
         sendString+= $('#distance').slider('value') + ";";
         sendString+= stars + ";";
         sendString+=restaurants;
-        console.log(sendString);
+        var url = '/restaurants';
+        var form = $('<form style="display:none" action="' + url + '" method="post">' + '<input type="text" name="details" value="' + sendString + '" />' +'</form>');
+        $('body').append(form);
+        form.submit();
+      });
+      $(document).on("click", "#login", function(){
+        $(this).css("display", "block");
       });
     </script>
 {% endblock %}

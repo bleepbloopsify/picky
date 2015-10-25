@@ -18,10 +18,12 @@ def restaurants():
         details = details.strip().strip(',').split(';')
         #address radius ratings categories
         address = details[0]
-        radius = details[1]
+        radius = int(details[1]) * 1609
         ratings = details[2]
         types = details[3].split(',')
-        results = util.filter(radius, types, address)
+        print "hello"
+        results = util.filter(address,radius,types,ratings)
+        print"uh oh"
         return render_template('restaurants.html', results=results)
     return redirect('/index')
 
