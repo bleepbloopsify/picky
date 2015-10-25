@@ -3,6 +3,16 @@
 {% block body %}
     <div class="home-contain">
       {{ nav() }}
+      <img id="chinese" class="cover-img" src="../static/chinese.png" height="720px" width="1280px"></img>
+      <img id="buffet" class="cover-img" src="../static/buffet.png" height="720px" width="1280px"></img>
+      <img id="diner" class="cover-img" src="../static/diner.png" height="720px" width="1280px"></img>
+      <img id="pizza" class="cover-img" src="../static/pizza.png" height="720px" width="1280px"></img>
+      <img id="vegan" class="cover-img" src="../static/vegan.png" height="720px" width="1280px"></img>
+      <img id="steakhouse" class="cover-img" src="../static/steakhouse.png" height="720px" width="1280px"></img>
+      <img id="japanese" class="cover-img" src="../static/japanese.png" height="720px" width="1280px"></img>
+      <img id="middle-eastern" class="cover-img" src="../static/middle-eastern.png" height="720px" width="1280px"></img>
+      <img id="indian" class="cover-img" src="../static/indian.png" height="720px" width="1280px"></img>
+      <img id="mexican" class="cover-img" src="../static/mexican.png" height="720px" width="1280px"></img>
       <div class="addr-box">
         <input name="address" type = "text" class="address-home">
         <button id="addr" class="address-button" ><span class="glyphicon glyphicon-search"</button>
@@ -141,6 +151,10 @@
     <script>
       var stars = 0;
       var enters = 0;
+      var types = ["mexican", "indian","chinese", "japanese", "buffet", "steakhouse", "vegan", "pizza", "middle-eastern", "diner"];
+      function isInArray(types, type) {
+        return types.indexOf(type.toLowerCase()) > -1;
+      }
       $(document).on("click", "#star-1", function(){
         if ($("#star-1")) {
           $(id).removeClass("rating-select");
@@ -251,6 +265,7 @@
              for (var i = 0; i < data.length; i++){
                $("#results").append('<div class="col-md-3 col-sm-4 col-xs-6 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
              }
+             $('.cover-img').css("visibility", "visible");
            });
            $('html, body').animate({
              scrollTop: ($('#scroll-to').offset().top)
@@ -260,6 +275,17 @@
        });
      });
      $(document).on("click", ".restaurant-type", function(){
+       var type = ($(this).text()).toLowerCase();
+       if (isInArray(types, type)) {
+         var id = "#" + type;
+         console.log(id);
+         if ($(id).is(":visible")) {
+           $(id).hide();
+         }
+         else {
+           $(id).show();
+         }
+       }
        if($(this).hasClass("selected")) {
          $(this).removeClass("selected");
        }
@@ -280,6 +306,8 @@
               for (var i = 0; i < data.length; i++){
                 $("#results").append('<div class="col-md-3 col-sm-4 col-xs-6 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
               }
+              $('.cover-img').css("visibility", "visible");
+              console.log("hello");
             });
             $('html, body').animate({
               scrollTop: ($('#scroll-to').offset().top)

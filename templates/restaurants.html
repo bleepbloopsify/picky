@@ -76,7 +76,11 @@
             {{result['location'][2]}}
           </div>
         </div>
-        <div class="col-sm-2">{{result['distance']}}</div>
+        <div class="col-sm-2">
+          <div class="res-dist">
+            {{result['distance']}}
+          </div> 
+        </div>
         <div class="col-sm-2">
           <form action="{{ '/history/%s,%s,%s/%s/%s'%(result['location'][0],result['location'][2],result['location'][3],result['name'],result['category']) }}">
             <button type="submit" class="choose">Pick me!</button>
