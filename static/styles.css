@@ -115,7 +115,17 @@ input:-webkit-autofill {
   top: -30px;
   font-size: 12px;
 }
-.rating > span:hover:before {
+.rating-select:before {
+  content: "\2605";
+  position: absolute;
+}
+.rating-select {
+  padding-top: 10px;
+  font-size: 24px;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating:hover:before {
    content: "\2605";
    position: absolute;
 }
@@ -125,8 +135,8 @@ input:-webkit-autofill {
   unicode-bidi: bidi-override;
   direction: rtl;
 }
-.rating > span:hover:before,
-.rating > span:hover ~ span:before {
+.rating:hover:before,
+.rating:hover ~ :before {
    content: "\2605";
    position: absolute;
 }
@@ -205,6 +215,9 @@ input:-webkit-autofill {
   font-size: 20px;
   border-left: dotted 4px #FFF600;
 }
+.address-button:focus {
+  outline: none;
+}
 .address-home {
   background: transparent;
   border: none;
@@ -213,6 +226,7 @@ input:-webkit-autofill {
   color: #FFF600;
   font-family: Dotted;
   font-size: 16px;
+  padding-left: 5px;
 }
 .address-home:focus {
   outline: none
@@ -231,6 +245,22 @@ input:-webkit-autofill {
   top: 80px;
   background: white;
   display: none;
+  z-index: 100;
+}
+.register {
+  width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 60px 40px 60px;
+  margin-top: 30px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 80px;
+  background: white;
+  display: none;
+  z-index: 100;
 }
 
 .login-title {
@@ -289,6 +319,8 @@ input:-webkit-autofill {
   top: 0;
   background-color: rgba(0, 0, 0, 0.6);
   width: 100%;
+  display: none;
+  z-index: 99;
 }
 #sendFilter {
   background: transparent;
@@ -304,4 +336,15 @@ input:-webkit-autofill {
 @font-face {
     font-family: Dotted;
     src: url("Dots.ttf");
+}
+.exit {
+  float: right;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: gray;
+  margin-right: -20px;
+}
+.exit:focus {
+  outline: none;
 }

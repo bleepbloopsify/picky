@@ -55,8 +55,8 @@
               <div class="rating-contain">
                 <p>Lowest Rating</p>
                 <div class="star">
-                  <div class="rating">
-                    <span id="star-1">☆</span><span id="star-2">☆</span><span id="star-3">☆</span><span id="star-4">☆</span><span id="star-5">☆</span>
+                  <div>
+                    <span id="star-5" class="rating">☆</span><span id="star-4" class="rating">☆</span><span id="star-3" class="rating">☆</span><span id="star-2" class="rating">☆</span><span id="star-1" class="rating">☆</span>
                   </div>
                 </div>
               </div>
@@ -103,36 +103,99 @@
         </div>
       </div>
     </div>
-    <div class="login-form">
-      <div class="login">
-        <h1 class="login-title">Login</h1>
-        <h3 class="login-msg">Don't have an account? <a href="/register">Register</a> here.</h3>
-        <h3 class="error-message">{{error}}</h3>
-        <form class="login-form" method="post">
-          <p>Username:</p>
-          <input type="text" name="user">
-          <p>Password:</p>
-          <input type="password" name="pwd">
-          <button type="submit">Login</button>
-        </form>
-      </div>
+    <div class="login">
+      <button id="exit-log" class="exit">x</button>
+      <h1 class="login-title">Login</h1>
+      <h3 class="login-msg">Don't have an account? <a href="/register">Register</a> here.</h3>
+      <h3 class="error-message">{{error}}</h3>
+      <form class="login-form" method="post">
+        <p>Username:</p>
+        <input type="text" name="user">
+        <p>Password:</p>
+        <input type="password" name="pwd">
+        <button type="submit">Login</button>
+      </form>
+    </div>
+    <div class="register">
+      <button id="exit-reg" class="exit">x</button>
+      <h1 class="login-title">Register</h1>
+      <h3 class="login-msg">Already have an account? <a href="/login">Login</a> here.</h3>
+      <h3 class="error-message">{{err}}</h3>
+      <form class="login-form" method="POST">
+        <p>Username:</p>
+        <input type="text" name="user">
+        <p>Password:</p>
+        <input type="password" name="pwd">
+        <p>Confirm Password:</p>
+        <input type="password" name="pwd2">
+        <button type="submit">Register</button>
+      </form>
+    </div>
+    <div class="cover">
     </div>
 
     <script>
       var stars = 0;
+      var enters = 0;
       $(document).on("click", "#star-1", function(){
+        if ($("#star-1")) {
+          $(id).removeClass("rating-select");
+          $(id).addClass("rating");
+        }
+        for (var i = 5; i > 1; i--) {
+          var id = "#star-" + i;
+          $(id).removeClass("rating-select");
+          $(id).addClass("rating");
+        }
+        $("#star-1").addClass("rating-select");
+        $("star-1").removeClass("rating");
         stars = 1;
       });
       $(document).on("click", "#star-2", function(){
+        for (var i = 5; i > 2; i--) {
+          var id = "#star-" + i;
+          $(id).removeClass("rating-select");
+          $(id).addClass("rating");
+        }
+        for (var i = 0; i < 2; i++) {
+          var id = "#star-" + (i + 1);
+          $(id).addClass("rating-select");
+          $(id).removeClass("rating");
+        }
         stars = 2;
       });
       $(document).on("click", "#star-3", function(){
+        for (var i = 5; i > 3; i--) {
+          var id = "#star-" + i;
+          $(id).removeClass("rating-select");
+          $(id).addClass("rating");
+        }
+        for (var i = 0; i < 3; i++) {
+          var id = "#star-" + (i + 1);
+          $(id).addClass("rating-select");
+          $(id).removeClass("rating");
+        }
         stars = 3;
       });
       $(document).on("click", "#star-4", function(){
+        for (var i = 5; i > 4; i--) {
+          var id = "#star-" + i;
+          $(id).removeClass("rating-select");
+          $(id).addClass("rating");
+        }
+        for (var i = 0; i < 4; i++) {
+          var id = "#star-" + (i + 1);
+          $(id).addClass("rating-select");
+          $(id).removeClass("rating");
+        }
         stars = 4;
       });
-      $(document).on("click", "#star-1", function(){
+      $(document).on("click", "#star-5", function(){
+        for (var i = 0; i < 5; i++) {
+          var id = "#star-" + (i + 1);
+          $(id).addClass("rating-select");
+          $(id).removeClass("rating");
+        }
         stars = 5;
       });
       $( "#distance" ).slider( {
@@ -170,20 +233,23 @@
         $("#distance").append(el5);
         $("#distance").append(el6);
         $(".address-home").focus();
+        $(".cover").height($(document).height());
       });
       $(function() {
        $('#addr').bind('click', function() {
-         $.getJSON('/results', {
-           addr: $('input[name="address"]').val()
-         }, function(data) {
-           var data = data.result;
-           $(".about-contain").css("display", "none");
-           $(".filter-contain").css("display", "block");
-           for (var i = 0; i < data.length; i++){
-             $("#results").append('<div class="col-md-3 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
-           }
-         });
-         return false;
+         if (enters++ < 1) {
+           $.getJSON('/results', {
+             addr: $('input[name="address"]').val()
+           }, function(data) {
+             var data = data.result;
+             $(".about-contain").css("display", "none");
+             $(".filter-contain").css("display", "block");
+             for (var i = 0; i < data.length; i++){
+               $("#results").append('<div class="col-md-3 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
+             }
+           });
+           return false;
+         }
        });
      });
      $(document).on("click", ".restaurant-type", function(){
@@ -197,16 +263,18 @@
      $("input").keypress(function(event) {
         if (event.which == 13) {
           event.preventDefault();
-          $.getJSON('/results', {
-            addr: $('input[name="address"]').val()
-          }, function(data) {
-            var data = data.result;
-            $(".about-contain").css("display", "none");
-            $(".filter-contain").css("display", "block");
-            for (var i = 0; i < data.length; i++){
-              $("#results").append('<div class="col-md-3 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
-            }
-          });
+          if (enters++ < 1) {
+            $.getJSON('/results', {
+              addr: $('input[name="address"]').val()
+            }, function(data) {
+              var data = data.result;
+              $(".about-contain").css("display", "none");
+              $(".filter-contain").css("display", "block");
+              for (var i = 0; i < data.length; i++){
+                $("#results").append('<div class="col-md-3 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
+              }
+            });
+          }
         }
       });
       var getUrlParameter = function getUrlParameter(sParam) {
@@ -240,7 +308,20 @@
         form.submit();
       });
       $(document).on("click", "#login", function(){
-        $(this).css("display", "block");
+        $(".login").css("display", "block");
+        $(".cover").css("display", "block");
+      });
+      $(document).on("click", "#register", function(){
+        $(".register").css("display", "block");
+        $(".cover").css("display", "block");
+      });
+      $(document).on("click", "#exit-log", function(){
+        $(".login").css("display", "none");
+        $(".cover").css("display", "none");
+      });
+      $(document).on("click", "#exit-reg", function(){
+        $(".register").css("display", "none");
+        $(".cover").css("display", "none");
       });
     </script>
 {% endblock %}

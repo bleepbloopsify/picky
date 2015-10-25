@@ -90,6 +90,11 @@ def register():
 def address():
   return render_template("/address.html")
 
+@app.route("/about")
+def about():
+  return render_template("/about.html")
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
