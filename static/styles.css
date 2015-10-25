@@ -340,6 +340,9 @@ input:-webkit-autofill {
   margin-left: auto;
   margin-right: auto;
 }
+.sendFilter:focus {
+  outline: none;
+}
 @font-face {
     font-family: Dotted;
     src: url("Dots.ttf");

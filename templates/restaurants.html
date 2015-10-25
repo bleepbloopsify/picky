@@ -1,35 +1,45 @@
 {% extends "master.html" %}
 {% block body %}
-{{results}}
-{{suggest}}}
-
-{% for result in results %}
-  {% name = result['name'] %}
-  {% rat = result['rating'] %}
-  {% loc = result['location'][0] %}
-  {% dist = result['distance'] %}
+<div class="container-fluid">
   <div class="row">
-    <div class="col-sm-5">{{result['name']}}</div>
-    <div class="col-sm-2">{{result['rating']}}</div>
-    <div class="col-sm-3"><a href={{"/history/%s/%s/%s"%(result['loc'],result['name'],result['category'])}}</div>
-    <div class="col-sm-2">{{result['distance']}}</div>
-  </div>
-    <div class="col-sm-5">{{result['link']}}</div>
-
-  {% for cat in category %}
-    {{ cat + " ,"}}
-  {% endfor %}
-{% endfor %}
-
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <div class="type-list">
-      <div class="row" id="results">
+    <div class="col-md-4">
+      <p>{{address}}</p>
+    </div>
+    <div class="col-md-8">
+      <div class="row">
+        {% for cat in category %}
+          <div class="col-md-3 col-sm-4 col-xs-6 restaurant-list">
+            <button class="restaurant-type selected">
+              {{ cat }}
+            </button>
+          </div>
+        {% endfor %}
       </div>
     </div>
-    <button id="sendFilter">Search</button>
   </div>
-</div>
+  {% for result in results %}
+    {% name = result['name'] %}
+    {% rat = result['rating'] %}
+    {% loc = result['location'][0] %}
+    {% dist = result['distance'] %}
+    <div class="row">
+      <div class="col-sm-2">{{name}}</div>
+      <div class="col-sm-2">{{rat}}</div>
+      <div class="col-sm-2">{{result['distance']}}</div>
+      <div class="col-sm-3"><a href={{"/history/%s/%s/%s"%(result['loc'],result['name'],result['category'])}}</div>
+    </div>
+      <div class="col-sm-5">{{result['link']}}</div>
+  {% endfor %}
+
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="type-list">
+        <div class="row" id="results">
+        </div>
+      </div>
+      <button id="sendFilter">Search</button>
+    </div>
+  </div>
 </div>
 {% endblock %}

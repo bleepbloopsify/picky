@@ -135,9 +135,6 @@ def request(url_params=None,host=YELP_HOST, path=YELP_SEARCH_PATH):
 
     return response
 
-def placeRequest(url_params=None,host=GOOGLE_HOST,path=GOOGLE_SEARCH_PATH):
-
-
 def getTypes(addr,rad=8000):
     url_params = {
     'term':'restaurants',

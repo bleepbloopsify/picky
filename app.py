@@ -14,7 +14,6 @@ def index():
 def restaurants():
     if request.method == "POST":
         form = request.form
-        print form
         details = form['details']
         details = details.strip().strip(',').split(';')
         #address radius ratings categories
