@@ -26,11 +26,21 @@ def restaurants():
         session['setrad'] = details[1]
         session['setrating'] = rating
         session['addr'] = address
+        if 'types' in session:
+            session['types'] += types
+        else:
+            session['types'] = types
         results = util.filter(address,radius,types,rating)
-
+        cats = util.getTypes(address,radius)
+        i = 0
+        while i < len(cats):
+            if cats[i] in session['types']:
+                cats.pop(i)
+            else:
+                i += 1
         for result in results:
             result['category'] = catformat(result['category'])
-        return render_template('restaurants.html', results=results,categories=util.getTypes(address,radius))
+        return render_template('restaurants.html', results=results,categories=cats)
     return redirect('/index')
 
 def catformat(cats):
