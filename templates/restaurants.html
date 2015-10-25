@@ -4,19 +4,15 @@
 {{suggest}}}
 
 {% for result in results %}
-  {% name = result['name'] %}
-  {% rat = result['rating'] %}
-  {% loc = result['location'][0] %}
-  {% dist = result['distance'] %}
   <div class="row">
     <div class="col-sm-5">{{result['name']}}</div>
     <div class="col-sm-2">{{result['rating']}}</div>
-    <div class="col-sm-3"><a href={{"/history/%s/%s/%s"%(result['loc'],result['name'],result['category'])}}</div>
+    <div class="col-sm-3"><a href="{{'/history/%s/%s/%s'%(result['location'][0],result['name'],result['category'])}}">Rate me!</a></div>
     <div class="col-sm-2">{{result['distance']}}</div>
   </div>
     <div class="col-sm-5">{{result['link']}}</div>
 
-  {% for cat in category %}
+ {% for cat in result['category'] %}
     {{ cat + " ,"}}
   {% endfor %}
 {% endfor %}

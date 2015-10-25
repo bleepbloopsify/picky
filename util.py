@@ -132,11 +132,7 @@ def request(url_params=None,host=YELP_HOST, path=YELP_SEARCH_PATH):
         response = json.loads(conn.read())
     finally:
         conn.close()
-
     return response
-
-def placeRequest(url_params=None,host=GOOGLE_HOST,path=GOOGLE_SEARCH_PATH):
-
 
 def getTypes(addr,rad=8000):
     url_params = {
