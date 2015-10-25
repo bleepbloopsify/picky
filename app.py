@@ -23,6 +23,7 @@ def restaurants():
         rating = details[2]
         types = details[3].split(',')
 
+
         session['setrad'] = details[1]
         session['setrating'] = rating
         session['addr'] = address
@@ -51,8 +52,9 @@ def history(location="",restaurant="",category=""):
         rating = reduce(lambda x, y: x+y, rating)/len(rating)
         rating = int(rating * 10)  / 10.
     else:
-        return render_template('rating.html',rating = "NO USER RATING")
-    return render_template('rating.html',rating = rating)
+        return render_template('rating.html',rating = "NO USER RATING",restaurant=restaurant,location=location.split(','),category=category)
+    print category
+    return render_template('rating.html',rating = rating,restaurant=restaurant,location=location.split(','),category=category)
 
 @app.route('/login', methods = ["GET","POST"] )
 def login():
