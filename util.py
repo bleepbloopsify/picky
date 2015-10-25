@@ -132,7 +132,6 @@ def request(url_params=None,host=YELP_HOST, path=YELP_SEARCH_PATH):
         response = json.loads(conn.read())
     finally:
         conn.close()
-
     return response
 
 def getTypes(addr,rad=8000):
