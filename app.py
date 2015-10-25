@@ -8,7 +8,6 @@ util.create()
 @app.route('/')
 @app.route('/index')
 def index():
-    util.getUserCategories(session['user'])
     return render_template("index.html")
 
 @app.route('/restaurants', methods=["GET","POST"])
