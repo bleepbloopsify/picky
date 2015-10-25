@@ -37,9 +37,10 @@ def authenticate(username, password):
     m = hashlib.sha224(password).hexdigest()
     query = "SELECT password FROM login WHERE username=\"%s\"" % (username)
     c.execute(query)
-    userdata = c.fetchone()[0]
+    userdata = c.fetchone()
     if userdata == None:
         return "Cannot find Username"
+    userdata = userdata[0]
     if m == userdata:
         userstore = username
         return ""
@@ -53,11 +54,11 @@ def setrating(uname, rating, location, restaurant, category):
     c.execute(query)
     conn.commit()
 
-def getrating(location, restaurant):
+def getrating(location):
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
-    query = "SELECT rating FROM info WHERE restaurant=:rest AND location=:loc"
-    data = c.execute(query, {"rest":restaurant, "loc":location}).fetchall()
+    query = "SELECT rating FROM info WHERE location=:loc"
+    data = c.execute(query, { "loc":location}).fetchall()
     data = [f[0] for f in data]
     conn.commit()
     return data
@@ -142,16 +143,13 @@ def getTypes(addr,rad=8000):
                 types += [category[0]]
     return types
 
-def filter(addr, rad=8000, types="bars"):
-    print "ok!"
+def filter(addr, rad=8000, types=[]):
     url_params = {
         'term':'restaurants',
         'location':addr.replace(' ','+'),
-        'category_filter':types,
         'radius':rad,
         'limit':5
     }
-    print "Ok!"
     raw = request(url_params)
     restaurants = []
     for business in raw['businesses']:
@@ -162,5 +160,7 @@ def filter(addr, rad=8000, types="bars"):
             'rating':business['rating'],
             'distance':str(business['distance'])[:str(business['distance']).find('.')+1] + 'm'
         }]
-        print "ok!"
+    for restaurant in restaurants:
+        if restaurant['category'] in types:
+            del restaurants[restaurant]
     return restaurants

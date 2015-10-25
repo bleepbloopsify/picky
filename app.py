@@ -20,9 +20,7 @@ def restaurants():
         types = form['types']
         results = util.filter(radius, types, address)
         return render_template('restaurants.html', results=results)
-    if request.method == "GET":
-        return render_template('restaurants.html')
-
+    return redirect('/index')
 
 @app.route('/results')
 def results():
@@ -32,19 +30,20 @@ def results():
      return jsonify(result=result)
 
 @app.route('/history')
-@app.route('/history/<location>', methods=['GET','POST'])
-def history(location=""):
+@app.route('/history/<location>/<restaurant>/<category>', methods=['GET','POST'])
+def history(location="",restaurant="",category=""):
     if location=="":
         return redirect('/index')
     if request.method == "POST":
         form = request.form
         rating = form['rating']
-        restaurant = form['restaurant']
-        category = form['category']
         util.setrating(session['user'], rating, location, restaurant, category)
     rating = util.getrating(location)
-    rating = reduce(lambda x, y: x+y, rating)/len(rating)
-    rating = int(rating * 10)  / 10.
+    if len(rating) > 0:
+        rating = reduce(lambda x, y: x+y, rating)/len(rating)
+        rating = int(rating * 10)  / 10.
+    else:
+        return render_template('rating.html',rating = "NO USER RATING")
     return render_template('rating.html',rating = rating)
 
 @app.route('/login', methods = ["GET","POST"] )
@@ -79,7 +78,7 @@ def register():
             return render_template('register.html', err="Username Taken")
         else:
             session['user'] = user
-            return redirect('index.html')
+            return redirect('/index')
     return render_template('register.html')
 
 @app.route("/address")
