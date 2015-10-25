@@ -25,7 +25,7 @@ def restaurants():
 
         session['addr'] = address
         results = util.filter(address,radius,types,rating)
-        return render_template('restaurants.html', results=results,suggest=util.suggest(session['user'],results),categories=util.getTypes(address,radius))
+        return render_template('restaurants.html', results=results,categories=util.getTypes(address,radius))
     return redirect('/index')
 
 @app.route('/results')
@@ -59,7 +59,6 @@ def login():
         username = form.get('user')
         password = form.get('pwd')
         auth = util.authenticate(username, password)
-        print auth
         if auth == "":
             session['user'] = username
             session['userhash'] = m = hashlib.sha224(username).hexdigest()

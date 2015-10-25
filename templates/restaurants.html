@@ -1,29 +1,246 @@
 {% extends "master.html" %}
 {% block body %}
 <div class="container-fluid">
+  <div class="nav-contain">
+    {{ nav() }}
+  </div>
   <div class="row">
-    <div class="col-md-4">
-      <p>{{session['addr']}}</p>
+    <div class="col-md-3 col-md-offset-1">
+      <p class="addr-title">Address</p>
+      <div id="yourAddr">
+        <p>{{session['addr']}}</p>
+      </div>
     </div>
     <div class="col-md-8">
       <div class="row">
-        {% for cat in  %}
-          <div class="col-md-3 col-sm-4 col-xs-6 restaurant-list">
-            <button class="restaurant-type selected">
-              {{ cat }}
-            </button>
+        <div class="col-md-4 col-md-offset-2 col-sm-12">
+          <div class="distance-contain">
+            <p>Max Distance</p>
+            <div id="distance">
+              <span id="distance-value"></span>
+            </div>
           </div>
-        {% endfor %}
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <div class="rating-contain">
+            <p>Lowest Rating</p>
+            <div class="star">
+              <div>
+                <span id="star-5" class="rating">☆</span><span id="star-4" class="rating">☆</span><span id="star-3" class="rating">☆</span><span id="star-2" class="rating">☆</span><span id="star-1" class="rating">☆</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   {% for result in results %}
-    <div class="row">
-      <div class="col-sm-5">{{result['name']}}</div>
-      <div class="col-sm-2">{{result['rating']}}</div>
-      <div class="col-sm-3"><a href="{{'/history/%s/%s/%s'%(result['location'][0],result['name'],result['category'])}}">Rate me!</a></div>
-      <div class="col-sm-2">{{result['distance']}}</div>
+    <div class="result-row">
+      <div class="row">
+        <div class="col-sm-2 col-sm-offset-1">
+          <div class="result-name">
+            {{result['name']}}
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="starry">
+            <div id="{{loop.index}}">
+              <span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span><span class="rated">☆</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="res-addr">
+            {{result['location'][0]}}
+            {{result['location'][1]}}<br>
+            {{result['location'][2]}}
+          </div>
+        </div>
+        <div class="col-sm-2">{{result['distance']}}</div>
+      </div>
     </div>
+    <hr class="res-line">
   {% endfor %}
 </div>
+<script>
+  var stars = 0;
+  var enters = 0;
+  $(document).on("click", "#star-1", function(){
+    if ($("#star-1")) {
+      $(id).removeClass("rating-select");
+      $(id).addClass("rating");
+    }
+    for (var i = 5; i > 1; i--) {
+      var id = "#star-" + i;
+      $(id).removeClass("rating-select");
+      $(id).addClass("rating");
+    }
+    $("#star-1").addClass("rating-select");
+    $("star-1").removeClass("rating");
+    stars = 1;
+  });
+  $(document).on("click", "#star-2", function(){
+    for (var i = 5; i > 2; i--) {
+      var id = "#star-" + i;
+      $(id).removeClass("rating-select");
+      $(id).addClass("rating");
+    }
+    for (var i = 0; i < 2; i++) {
+      var id = "#star-" + (i + 1);
+      $(id).addClass("rating-select");
+      $(id).removeClass("rating");
+    }
+    stars = 2;
+  });
+  $(document).on("click", "#star-3", function(){
+    for (var i = 5; i > 3; i--) {
+      var id = "#star-" + i;
+      $(id).removeClass("rating-select");
+      $(id).addClass("rating");
+    }
+    for (var i = 0; i < 3; i++) {
+      var id = "#star-" + (i + 1);
+      $(id).addClass("rating-select");
+      $(id).removeClass("rating");
+    }
+    stars = 3;
+  });
+  $(document).on("click", "#star-4", function(){
+    for (var i = 5; i > 4; i--) {
+      var id = "#star-" + i;
+      $(id).removeClass("rating-select");
+      $(id).addClass("rating");
+    }
+    for (var i = 0; i < 4; i++) {
+      var id = "#star-" + (i + 1);
+      $(id).addClass("rating-select");
+      $(id).removeClass("rating");
+    }
+    stars = 4;
+  });
+  $(document).on("click", "#star-5", function(){
+    for (var i = 0; i < 5; i++) {
+      var id = "#star-" + (i + 1);
+      $(id).addClass("rating-select");
+      $(id).removeClass("rating");
+    }
+    stars = 5;
+  });
+
+  $( "#distance" ).slider( {
+    value: 25,
+    max: 25,
+    change : function() {
+      var label = $('#distance-value');
+      label.text($('#distance').slider('value') + " miles");
+      var string = $('#distance').text();
+      label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 8 - 15);
+    },
+    slide : function() {
+      var label = $('#distance-value');
+      label.text($('#distance').slider('value') + " miles");
+      var string = $('#distance').text();
+      label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 8 - 15);
+    }
+  });
+  $(document).ready(function() {
+    var label = $('#distance-value');
+    label.text($('#distance').slider('value') + " miles");
+    var string = $('#distance').text();
+    label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 8 - 15);
+    var opt = $('#distance').data().uiSlider.options;
+    var el = $('<label>' + 0 + '</label>').addClass("distance-label-1");
+    var el2 = $('<label>' + 5 + '</label>').addClass("distance-label-2");
+    var el3 = $('<label>' + 10 + '</label>').addClass("distance-label-3");
+    var el4 = $('<label>' + 15 + '</label>').addClass("distance-label-4");
+    var el5 = $('<label>' + 20 + '</label>').addClass("distance-label-5");
+    var el6 = $('<label>' + 25 + '</label>').addClass("distance-label-6");
+    $("#distance").append(el);
+    $("#distance").append(el2);
+    $("#distance").append(el3);
+    $("#distance").append(el4);
+    $("#distance").append(el5);
+    $("#distance").append(el6);
+    $(".address-home").focus();
+    $(".cover").height($(document).height());
+  });
+  $(function() {
+   $('#addr').bind('click', function() {
+     if (enters++ < 1) {
+       $.getJSON('/results', {
+         addr: $('input[name="address"]').val()
+       }, function(data) {
+         var data = data.result;
+         $(".about-contain").css("display", "none");
+         $(".filter-contain").css("display", "block");
+         for (var i = 0; i < data.length; i++){
+           $("#results").append('<div class="col-md-3 col-sm-4 col-xs-6 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
+         }
+       });
+       $('html, body').animate({
+         scrollTop: ($('#scroll-to').offset().top)
+       },500);
+     }
+     return false;
+   });
+ });
+ $(document).on("click", ".restaurant-type", function(){
+   if($(this).hasClass("selected")) {
+     $(this).removeClass("selected");
+   }
+   else {
+     $(this).addClass("selected");
+   }
+ });
+ $("input").keypress(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      if (enters++ < 1) {
+        $.getJSON('/results', {
+          addr: $('input[name="address"]').val()
+        }, function(data) {
+          var data = data.result;
+          $(".about-contain").css("display", "none");
+          $(".filter-contain").css("display", "block");
+          for (var i = 0; i < data.length; i++){
+            $("#results").append('<div class="col-md-3 col-sm-4 col-xs-6 restaurant-list"><button class="restaurant-type selected">' + data[i] + '</button></div>');
+          }
+        });
+        $('html, body').animate({
+          scrollTop: ($('#scroll-to').offset().top)
+        },500);
+      }
+    }
+  });
+  var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split('=');
+
+      if (sParameterName[0] === sParam) {
+          return sParameterName[1] === undefined ? true : sParameterName[1];
+      }
+    }
+  };
+  $(document).on("click", "#sendFilter", function(){
+    var sendString = $('#yourAddr').text() + ";";
+    var restaurants = "";
+    $('.restaurant-type').each(function(i, obj) {
+      if (!$(obj).hasClass("selected")) {
+        restaurants += $(obj).text() + ",";
+      }
+    });
+    sendString+= $('#distance').slider('value') + ";";
+    sendString+= stars + ";";
+    sendString+=restaurants;
+    var url = '/restaurants';
+    var form = $('<form style="display:none" action="' + url + '" method="post">' + '<input type="text" name="details" value="' + sendString + '" />' +'</form>');
+    $('body').append(form);
+    form.submit();
+  });
+</script>
 {% endblock %}

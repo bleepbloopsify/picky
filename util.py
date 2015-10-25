@@ -149,12 +149,10 @@ def getTypes(addr,rad=8000):
     return types
 
 def filter(addr, rad=8000, types=[], rating=0):
-    print types,rating
     url_params = {
         'term':'restaurants',
         'location':addr.replace(' ','+'),
-        'radius':rad,
-        'limit':5
+        'radius':rad
     }
     raw = request(url_params)
     restaurants = []
@@ -168,18 +166,12 @@ def filter(addr, rad=8000, types=[], rating=0):
             'link':business['url']
         }]
     for restaurant in restaurants:
-        print "hello"
-        print restaurant['category']
         if float(restaurant['rating']) < float(rating):
-            print float(restaurant['rating'])
-            print "goodby"
             del restaurant
         else:
             restaurant['category'] = [c[0] for c in restaurant['category']]
-            print restaurant['category']
             for category in restaurant['category']:
                 if category in types:
-                    print "bye"
                     del restaurant
                     break
     return restaurants
@@ -200,7 +192,6 @@ def suggest(uname, restaurants):
     fav = "helpme"
     most_visit = -1
     for k,v in cats.iteritems():
-        print k,v
         if v > most_visit:
             fav = k
     a = random.randrange(99)
