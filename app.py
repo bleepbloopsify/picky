@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, Response, jsonify
 import util
+import hashlib
 
 app = Flask(__name__)
 app.secret_key = "nothing"
@@ -12,8 +13,6 @@ def index():
 
 @app.route('/restaurants', methods=["GET","POST"])
 def restaurants():
-    if 'user' not in session:
-        return redirect('/login')
     if request.method == "POST":
         form = request.form
         details = form['details']
@@ -26,7 +25,7 @@ def restaurants():
 
         session['addr'] = address
         results = util.filter(address,radius,types,rating)
-        return render_template('restaurants.html', results=results,suggest=util.suggest(session['user'],results))
+        return render_template('restaurants.html', results=results,suggest=util.suggest(session['user'],results),categories=util.getTypes(address,radius))
     return redirect('/index')
 
 @app.route('/results')
@@ -63,6 +62,7 @@ def login():
         print auth
         if auth == "":
             session['user'] = username
+            session['userhash'] = m = hashlib.sha224(username).hexdigest()
             return redirect('/')
         else:
             return render_template('login.html', error=auth)
