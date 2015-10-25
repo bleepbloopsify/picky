@@ -16,19 +16,17 @@ def restaurants():
     if request.method == "POST":
         form = request.form
         details = form['details']
-        details = details.strip().strip(',').split(';')
+        details = [c.strip() for c in details.strip().strip(',').split(';')]
         #address radius ratings categories
         address = details[0]
         radius = int(details[1]) * 1609
         rating = details[2]
-        types = details[3].split(',')
-
-
-
+        types = [d.strip() for d in details[3].split(',')]
         session['setrad'] = details[1]
         session['setrating'] = rating
         session['addr'] = address
         results = util.filter(address,radius,types,rating)
+
         for result in results:
             result['category'] = catformat(result['category'])
         return render_template('restaurants.html', results=results,categories=util.getTypes(address,radius))

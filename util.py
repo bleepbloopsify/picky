@@ -18,7 +18,7 @@ type_dist = {
         "sushi", "live/raw food", "teppanyaki", "japanese", "sushi bars"
     ],
     "Diner":[
-        "sandwiches", "american", "diner", "deli", "hot dogs", "burgers", "southern", "breakfast", "fast food"
+        "sandwiches", "american", "diner", "deli", "hotdogs", "burgers", "southern", "breakfast", "fast food"
     ],
     "Middle Eastern":[
         "falafel", "egyptian", "afghan", "persian/iranian", "middle eastern"
@@ -179,7 +179,6 @@ def getTypes(addr,rad=8000):
         for category in business['categories']:
             added = 0
             for dist in type_dist:
-
                 if category[0].lower() in type_dist[dist]:
                     if dist not in types:
                         types += [dist]
@@ -189,6 +188,7 @@ def getTypes(addr,rad=8000):
     return types
 
 def filter(addr, rad=8000, types=[], rating=0):
+    addr = addr.strip()
     url_params = {
         'term':'restaurants',
         'location':addr.replace(' ','+'),
@@ -197,24 +197,39 @@ def filter(addr, rad=8000, types=[], rating=0):
     raw = request(url_params)
     restaurants = []
     for business in raw['businesses']:
+        categories = []
+        for category in business['categories']:
+            added = 0
+            for dist in type_dist:
+                if category[0].lower() in type_dist[dist]:
+                    if dist not in categories:
+                        categories += [dist]
+                        added = 1
+            if category[0] not in categories and added != 1:
+                categories += [category[0]]
         restaurants += [{
             'name':business['name'],
             'location':business['location']['display_address'],
-            'category':business['categories'],
+            'category':categories,
             'rating':business['rating'],
             'distance':str(int((business['distance'] / 1609) * 100) / 100.) + 'mi',
             'link':business['url']
         }]
+    final =[]
     for restaurant in restaurants:
+        b = False
         if float(restaurant['rating']) < float(rating):
-            del restaurants[restaurant]
+            b = True
         else:
-            restaurant['category'] = [c[0] for c in restaurant['category']]
+            #restaurant['category'] = [c[0] for c in restaurant['category']]
             for category in restaurant['category']:
+                category = category.strip()
                 if category in types:
-                    del restaurants[restaurant]
+                    b = True
                     break
-    return restaurants
+        if not b:
+            final += [restaurant]
+    return final
 
 
 def suggest(uname, restaurants):
