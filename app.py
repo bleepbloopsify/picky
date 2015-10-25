@@ -12,8 +12,6 @@ def index():
 
 @app.route('/restaurants', methods=["GET","POST"])
 def restaurants():
-    if 'user' not in session:
-        return redirect('/login')
     if request.method == "POST":
         form = request.form
         details = form['details']
