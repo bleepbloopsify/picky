@@ -149,6 +149,17 @@ input:-webkit-autofill {
   direction: rtl;
   color: #FFAE00;
 }
+.rated-select {
+  padding-top: 10px;
+  font-size: 24px;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  color: #FFAE00;
+}
+.rated-select:before {
+  content: "\2605";
+  position: absolute;
+}
 .rating:hover:before,
 .rating:hover ~ :before {
    content: "\2605";
