@@ -90,22 +90,11 @@
           console.log(string.substring(0,string.length - 18));
         }
       });
-        // create: function() {
-        //    $('#distance-value-min').appendTo($('#distance a').get(0));
-        //    $('#distance-value-max').appendTo($('#distance a').get(1));
-        // },
-        // slide: function(event, ui) {
-        //   $(ui.handle).find('span').html('$' + ui.value);
-        //
       $(document).ready(function() {
         var label = $('#distance-value');
-        // var label = $('#distance-value-min');
-        // var label2 = $('#distance-value-max');
         label.text($('#distance').slider('value') + " miles");
         var string = $('#distance').text();
         label.css('left', (parseInt(string.substring(0,string.length - 8)) - 1) * 8 - 15);
-        // label2.css('left', $('#distance').slider('values', 1) * 3 - 15);
-        // label2.text('$' + $('#distance').slider('values', 1));
         var opt = $('#distance').data().uiSlider.options;
         var el = $('<label>' + 0 + '</label>').addClass("distance-label-1");
         var el2 = $('<label>' + 5 + '</label>').addClass("distance-label-2");
@@ -120,29 +109,6 @@
         $("#distance").append(el5);
         $("#distance").append(el6);
       });
-      // $('#distance').bind('slide', function () {
-      //   var label = $('#distance-value');
-      //   // var label = $('#distance-value-min');
-      //   // var label2 = $('#distance-value-max');
-      //   label.text('$' + $('#distance').slider('value'));
-      //   var string = $('#distance').text();
-      //   label.css('left', (parseInt(string.substring(16,string.length)) - 1) * 12);
-      //   console.log(string.substring(16,string.length));
-      //   // label2.css('left', $('#distance').slider('values', 1) * 3 - 15);
-      //   // label2.text('$' + $('#distance').slider('values', 1));
-      // });
-      // $('#distance-value-min').html('$' + $('#distance').slider('values', 0)).position({
-      //   my: 'center top',
-      //   at: 'center bottom',
-      //   of: $('#distance a:eq(0)'),
-      //   offset: "0, 10"
-      // });
-      // $('#distance-value-max').html('$' + $('#distance').slider('values', 1)).position({
-      //   my: 'center top',
-      //   at: 'center bottom',
-      //   of: $('#distance a:eq(1)'),
-      //   offset: "0, 10"
-      // });
       $(".restaurant-type").click(function(){
         console.log("hello");
         if($(this).hasClass("selected")) {
@@ -155,7 +121,7 @@
       $(function() {
          $('a#addr').bind('click', function() {
            $.getJSON('/results', {
-             addr: $('input[name="a"]').val()
+             addr: $('input[name="address"]').val()
            }, function(data) {
              console.log(data.result);
            });
