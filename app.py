@@ -6,17 +6,18 @@ app.secret_key = "nothing"
 util.create()
 
 @app.route('/')
+@app.route('/index', methods=['GET','POST'])
 def index():
     return render_template('index.html')
 
 
 @app.route('/history')
-@app.route('/history/<restaurant>/<location>')
-def history(restaurant="",location=""):
-    if restaurant=="" or location=="":
+@app.route('/history/<location>', methods=['GET','POST'])
+def history(location=""):
+    if location=="":
         return redirect('/')
 
-    rating = util.getrating(location, restaurant)
+    rating = util.getrating(location)
     rating = reduce(lambda x, y: x+y, rating)/len(rating)
     rating = int(rating * 10)  / 10.
     return render_template('rating.html',rating = rating)
